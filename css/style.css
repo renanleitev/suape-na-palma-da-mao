@@ -1,0 +1,162 @@
+/* Configurações gerais */
+:root {
+    --cor-verde-principal: #2f7667;
+    --cor-verde-secundaria: #0c5445;
+    --cor-branca-principal: #ffffff;
+    --cor-escura-principal: #000000;
+    --cor-escura-secundaria: #00000096;
+    --cor-azul-principal: #3498db;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    color: var(--cor-branca-principal);
+    font-size: 20px;
+}
+
+/* Configurações do container principal */
+.main-container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Configurações do header */
+.header {
+    padding: 20px;
+    padding-bottom: 0;
+    display: flex;
+    flex-direction: row;
+    background-color: var(--cor-verde-principal);
+    justify-content: center;
+    align-items: center;
+}
+
+.header-title {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.menu-sidebar {
+    margin: 0;
+    margin-bottom: 10px;
+    padding: 10px;
+    padding-top: 0;
+    background-color: var(--cor-verde-secundaria);
+    border: none;
+}
+
+/* Configurações do iframe */
+.iframe {
+    height: 100%;
+}
+
+iframe {
+    width: 100vw;
+    height: 100%;
+}
+
+/* Sobrescrevendo configurações do bootsrap */
+.offcanvas {
+    background-color: var(--cor-verde-principal) !important;
+}
+
+.toggle-pesquisar {
+    position: absolute;
+    bottom: 100px;
+}
+
+.pesquisar-container {
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    gap: 20px;
+    max-width: 400px;
+    background-color: var(--cor-verde-principal);
+}
+
+.pesquisar-input {
+    padding: 10px;
+    border: 1px solid var(--cor-branca-principal);
+    outline: none;
+    border-radius: 20px;
+    background-color: var(--cor-verde-principal);
+}
+
+.pesquisar-input:focus {
+    border: 3px solid var(--cor-verde-secundaria);
+}
+
+::placeholder {
+    color: var(--cor-branca-principal);
+    opacity: 1;
+    /* Firefox */
+}
+
+:-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
+    color: var(--cor-branca-principal);
+}
+
+::-ms-input-placeholder {
+    /* Microsoft Edge */
+    color: var(--cor-branca-principal);
+}
+
+.pesquisar-button {
+    padding: 10px;
+    background-color: var(--cor-branca-principal);
+    color: var(--cor-escura-principal);
+    border-radius: 20px;
+    border: none;
+}
+
+.empresas-select {
+    background-color: var(--cor-verde-secundaria);
+    border-bottom: 1px solid var(--cor-branca-principal);
+    text-align: center;
+    border: none;
+    border-radius: 20px;
+    padding: 10px;
+}
+
+/* Dialog container */
+.dialog-container::backdrop {
+    background-color: rgba(0, 0, 0, 0.568);
+}
+
+.dialog-container {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border: none;
+    background-color: transparent;
+}
+
+/* Loading screen */
+.loader {
+    border: 16px solid var(--cor-branca-principal);
+    /* Light grey */
+    border-top: 16px solid var(--cor-azul-principal);
+    /* Blue */
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}

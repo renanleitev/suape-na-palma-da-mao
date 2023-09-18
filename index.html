@@ -1,11 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css//bootstrap.min.css">
+    <title>Suape na Palma da Mão</title>
 </head>
+
 <body>
-    <p>Versão 1.0</p>
+    <!-- Container principal -->
+    <div class="main-container">
+        <header class="header">
+            <p class="header-title">
+                Suape na Palma da Mão
+            </p>
+            <button class="menu-sidebar">|||</button>
+        </header>
+        <div class="iframe">
+            <iframe id="google-maps" style="border:0;" allowfullscreen="" loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+    </div>
+    <!-- Função de pesquisa -->
+    <div class="d-flex flex-column justify-content-center align-items-center">
+        <button class="btn btn-success toggle-pesquisar" type="button" data-bs-toggle="offcanvas"
+            data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
+            Pesquisar empresas
+        </button>
+    </div>
+    <div class="offcanvas offcanvas-bottom h-auto" tabindex="-1" id="offcanvasBottom" aria-labelledby="offcanvasBottomLabel">
+        <div class="d-flex flex-column justify-content-center align-items-center">
+            <div class="pesquisar-container">
+                <input type="text" class="pesquisar-input" id="pesquisar" placeholder="Pesquisar empresas...">
+                <select name="" class="empresas-select" id="empresas" onchange="getOption()">
+                </select>
+                <button onclick="searchOption()" class="pesquisar-button">
+                    Ir
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- Loading screen -->
+    <dialog class="dialog-container" id="loading">
+        <div class="loader"></div>
+    </dialog>
+    <!-- Error screen -->
+    <dialog class="dialog-container" id="error">
+        <div class="alert alert-danger text-nowrap" role="alert">
+            Consulta inválida.
+        </div>
+    </dialog>
 </body>
+<script src="./javascript/initial-screen.js"></script>
+<script src="./javascript/bootstrap.bundle.min.js"></script>
+
 </html>
