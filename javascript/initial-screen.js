@@ -1,24 +1,29 @@
 // definindo as coordenadas iniciais
 let latitude = -8.394097983524112;
 let longitude = -34.97408204488957;
+// obtendo os elementos html pelo id
 const iframe = document.getElementById("google-maps");
 const loading = document.getElementById("loading");
 const error = document.getElementById("error");
-// carregando a página
-loading.showModal();
+const warning = document.getElementById("warning");
+// definindo a url base
+const baseUrl = "http://localhost:3000";
+// localização padrão (porto de suape)
+iframe.src = `https://maps.google.com/maps?q=${latitude},${longitude}&z=15&output=embed`;
+// obtendo a localização do usuário
 function getPositionSuccess(position) {
     latitude = position.coords.latitude;
     longitude = position.coords.longitude;
     iframe.src = `https://maps.google.com/maps?q=${latitude},${longitude}&z=15&output=embed`;
-    loading.close();
 }
 function getPositionError() {
+    warning.showModal();
+    setTimeout(() => warning.close(), 2000);
     iframe.src = `https://maps.google.com/maps?q=${latitude},${longitude}&z=15&output=embed`;
-    loading.close();
 }
 navigator.geolocation.getCurrentPosition(getPositionSuccess, getPositionError);
 // obtendo os dados das empresas
-const initialUrl = "http://localhost:3000/empresa/";
+const initialUrl = `${baseUrl}/empresa/`;
 const options =
 {
     headers: {
@@ -41,7 +46,7 @@ fetch(initialUrl, options)
     });
 // Obtendo a url para o iframe
 // https://medium.com/@supun1001/how-to-generate-google-embed-links-programmatically-for-iframes-for-routes-only-d6dc225e59e8
-function createUrlMap(destinationLatitude, destinationLongitude){
+function createUrlMap(destinationLatitude, destinationLongitude) {
     const origem = {
         lat: latitude,
         lon: longitude
@@ -64,30 +69,36 @@ function createUrlMap(destinationLatitude, destinationLongitude){
     urlConstruct += `!5e0!3m2!1sen!2sau!4v${epochNow}000!5m2!1sen!2sau`;
     iframe.src = urlConstruct;
 }
-// obtendo os valores pelo select
-function getOption() {
-    const coordenadasEmpresa = document.getElementById("empresas").value;
-    const [empresaLatitude, empresaLongitude] = coordenadasEmpresa.split(',');
-    createUrlMap(empresaLatitude, empresaLongitude);
-}
 // obtendo os valores pelo input
-function searchOption(){
-    const pesquisar = document.getElementById('pesquisar').value;
-    const searchUrl = `http://localhost:3000/empresa/query/${pesquisar}`;
-    loading.showModal();
-    fetch(searchUrl, options)
-        .then((resposta) => {
-            if (resposta.status !== 200) {
+function searchOption() {
+    // obtendo os valores do input de pesquisar
+    const pesquisar = document.getElementById('pesquisar');
+    const consulta = pesquisar.value;
+    // definindo a url de consulta
+    const searchUrl = `${baseUrl}/empresa/query/${consulta}`;
+    // se o input não for vazio, pesquisar o texto que o usuário digitou
+    if (consulta !== '') {
+        loading.showModal();
+        fetch(searchUrl, options)
+            .then((resposta) => {
+                if (resposta.status !== 200) {
+                    loading.close();
+                    error.showModal();
+                    setTimeout(() => error.close(), 2000);
+                    return;
+                }
+                return resposta.json();
+            })
+            .then(empresa => {
+                createUrlMap(empresa.Latitude, empresa.Longitude);
+                pesquisar.value = '';
                 loading.close();
-                error.showModal();
-                setTimeout(() => error.close(), 2000);
-                return;
-            }
-            return resposta.json();
-        })
-        .then(empresa => {
-            createUrlMap(empresa.Latitude, empresa.Longitude);
-            loading.close();
-        });
+            });
+    } else {
+        // se o input estiver vazio, obter os valores pelo select
+        const coordenadasEmpresa = document.getElementById("empresas").value;
+        const [empresaLatitude, empresaLongitude] = coordenadasEmpresa.split(',');
+        createUrlMap(empresaLatitude, empresaLongitude);
+    }
 
 }

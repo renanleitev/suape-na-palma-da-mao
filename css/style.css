@@ -43,12 +43,10 @@
 }
 
 .menu-sidebar {
-    margin: 0;
-    margin-bottom: 10px;
-    padding: 10px;
-    padding-top: 0;
-    background-color: var(--cor-verde-secundaria);
+    background-color: transparent;
     border: none;
+    transform: rotate(90deg);
+    margin-bottom: 15px;
 }
 
 /* Configurações do iframe */
@@ -123,6 +121,8 @@ iframe {
     border: none;
     border-radius: 20px;
     padding: 10px;
+    /* acrescentando margem direita da seta select */
+    border-right: 16px solid transparent
 }
 
 /* Dialog container */

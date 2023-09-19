@@ -13,11 +13,46 @@
     <!-- Container principal -->
     <div class="main-container">
         <header class="header">
+            <!-- Título do site -->
             <p class="header-title">
                 Suape na Palma da Mão
             </p>
-            <button class="menu-sidebar">|||</button>
+            <!-- Menu hamburger -->
+            <button class="menu-sidebar" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample"
+                aria-controls="offcanvasExample">
+                |||
+            </button>
+            <!-- Menu lateral -->
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasExample"
+                aria-labelledby="offcanvasExampleLabel">
+                <!-- Título do menu e botão de fechar -->
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasExampleLabel">Menu</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <!-- Links para o site -->
+                <div class="offcanvas-body">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="#">Página Inicial</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="#">Mais Próximos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="#">Categoria</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="#">Ajuda</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="#">Sobre</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </header>
+        <!-- Iframe do Google Maps -->
         <div class="iframe">
             <iframe id="google-maps" style="border:0;" allowfullscreen="" loading="lazy"
                 referrerpolicy="no-referrer-when-downgrade"></iframe>
@@ -25,17 +60,22 @@
     </div>
     <!-- Função de pesquisa -->
     <div class="d-flex flex-column justify-content-center align-items-center">
+        <!-- Botão para expandir a div de pesquisa -->
         <button class="btn btn-success toggle-pesquisar" type="button" data-bs-toggle="offcanvas"
             data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
             Pesquisar empresas
         </button>
     </div>
-    <div class="offcanvas offcanvas-bottom h-auto" tabindex="-1" id="offcanvasBottom" aria-labelledby="offcanvasBottomLabel">
+    <div class="offcanvas offcanvas-bottom h-auto" tabindex="-1" id="offcanvasBottom"
+        aria-labelledby="offcanvasBottomLabel">
         <div class="d-flex flex-column justify-content-center align-items-center">
             <div class="pesquisar-container">
+                <!-- Input de pesquisa -->
                 <input type="text" class="pesquisar-input" id="pesquisar" placeholder="Pesquisar empresas...">
+                <!-- Input de select -->
                 <select name="" class="empresas-select" id="empresas" onchange="getOption()">
                 </select>
+                <!-- Botão de pesquisa -->
                 <button onclick="searchOption()" class="pesquisar-button">
                     Ir
                 </button>
@@ -44,12 +84,18 @@
     </div>
     <!-- Loading screen -->
     <dialog class="dialog-container" id="loading">
-        <div class="loader"></div>
+        <div class="loader m-0"></div>
     </dialog>
     <!-- Error screen -->
     <dialog class="dialog-container" id="error">
-        <div class="alert alert-danger text-nowrap" role="alert">
+        <div class="alert alert-danger text-nowrap m-0" role="alert">
             Consulta inválida.
+        </div>
+    </dialog>
+    <!-- Warning screen -->
+    <dialog class="dialog-container" id="warning">
+        <div class="alert alert-warning m-0" role="alert">
+           Sua localização atual é Porto de Suape.
         </div>
     </dialog>
 </body>
