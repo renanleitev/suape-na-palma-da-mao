@@ -87,6 +87,7 @@ function searchOption() {
                 if (resposta.status !== 200) {
                     loading.close();
                     error.showModal();
+                    pesquisar.value = '';
                     setTimeout(() => error.close(), 2000);
                     return;
                 }

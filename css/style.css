@@ -72,7 +72,7 @@ iframe {
 
 .toggle-pesquisar {
     position: absolute;
-    bottom: 100px;
+    bottom: 120px;
 }
 
 .pesquisar-container {
@@ -142,6 +142,7 @@ iframe {
     transform: translate(-50%, -50%);
     border: none;
     background-color: transparent;
+    overflow: hidden;
 }
 
 /* Loading screen */
