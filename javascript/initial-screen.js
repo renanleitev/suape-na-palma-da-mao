@@ -7,7 +7,10 @@ const loading = document.getElementById("loading");
 const error = document.getElementById("error");
 const warning = document.getElementById("warning");
 // definindo a url base
+// se estiver usando localmente (comentar/descomentar a linha abaixo)
 const baseUrl = "http://localhost:3000";
+// se a api estiver rodando no servidor (comentar/descomentar a linha abaixo)
+// const baseUrl = "http://150.230.90.116:3000";
 // localização padrão (porto de suape)
 iframe.src = `https://maps.google.com/maps?q=${latitude},${longitude}&z=15&output=embed`;
 // obtendo a localização do usuário
@@ -18,7 +21,7 @@ function getPositionSuccess(position) {
 }
 function getPositionError() {
     warning.showModal();
-    setTimeout(() => warning.close(), 2000);
+    // setTimeout(() => warning.close(), 2000);
     iframe.src = `https://maps.google.com/maps?q=${latitude},${longitude}&z=15&output=embed`;
 }
 navigator.geolocation.getCurrentPosition(getPositionSuccess, getPositionError);

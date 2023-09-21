@@ -12,15 +12,24 @@
     padding: 0;
     margin-left: 0;
     margin-right: 0;
-    overflow: hidden;
     color: var(--cor-branca-principal);
     font-size: 20px;
+}
+
+html {
+    overflow: hidden;
+    width: 100%;
+}
+
+body {
+    height: 100%;
+    position: fixed;
 }
 
 /* Configurações do container principal */
 .main-container {
     width: 100vw;
-    height: 100vh;
+    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -47,12 +56,13 @@
     background-color: transparent;
     border: none;
     transform: rotate(90deg);
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 }
 
 /* Configurações do iframe */
 iframe {
     flex: 1;
+    position: relative;
 }
 
 /* Sobrescrevendo configurações do bootsrap */
@@ -129,7 +139,6 @@ iframe {
 .dialog-container {
     position: absolute;
     left: 50%;
-    top: 50%;
     transform: translate(-50%, -50%);
     border: none;
     background-color: transparent;
