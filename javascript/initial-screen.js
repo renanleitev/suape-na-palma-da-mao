@@ -21,7 +21,7 @@ function getPositionSuccess(position) {
 }
 function getPositionError() {
     warning.showModal();
-    // setTimeout(() => warning.close(), 2000);
+    setTimeout(() => warning.close(), 3000);
     iframe.src = `https://maps.google.com/maps?q=${latitude},${longitude}&z=15&output=embed`;
 }
 navigator.geolocation.getCurrentPosition(getPositionSuccess, getPositionError);
