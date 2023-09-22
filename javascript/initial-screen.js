@@ -12,7 +12,7 @@ const delayTime = 3000;
 // se estiver usando localmente (comentar/descomentar a linha abaixo)
 // const baseUrl = "http://localhost:3000";
 // se a api estiver rodando no servidor (comentar/descomentar a linha abaixo)
-const baseUrl = "http://150.230.90.116:3000";
+const baseUrl = "https://api-suape.onrender.com/";
 // localização padrão (porto de suape)
 iframe.src = `https://maps.google.com/maps?q=${latitude},${longitude}&z=15&output=embed`;
 // obtendo a localização do usuário

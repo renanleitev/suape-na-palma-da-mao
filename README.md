@@ -24,15 +24,17 @@ Possui um mapa central, que exibe a localização atual do usuário. Após, o us
 3. javascript = Onde ficam armazenados os arquivos de javascript do site (Ex: initial-screen.js)
 4. back-end = Onde ficam armazenados os arquivos de testes, utilizados para se comunicar com a api no back-end
 
-## Para visualizar o site
+## Links
 
-Basta abrir o arquivo index.html no seu navegador ou rodar via servidor node (http://localhost:3000/).
+1. Site: https://renanleitev.github.io/suape-na-palma-da-mao/
+2. Api: https://api-suape.onrender.com/ 
 
 ## TODO
 
 1. Adicionar página sobre as empresas, divididas por categorias
 2. Adicionar páginas secundárias (sobre, contato, ajuda, etc)
 3. Adicionar suporte a PWA (responsividade)
+
 
 ## Equipe
 
