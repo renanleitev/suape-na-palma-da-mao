@@ -7,12 +7,13 @@ const loading = document.getElementById("loading");
 const error = document.getElementById("error");
 const warning = document.getElementById("warning");
 const offline = document.getElementById("offline");
+// delay para exibir os avisos na tela
 const delayTime = 3000;
 // definindo a url base
 // se estiver usando localmente (comentar/descomentar a linha abaixo)
 // const baseUrl = "http://localhost:3000";
 // se a api estiver rodando no servidor (comentar/descomentar a linha abaixo)
-const baseUrl = "https://api-suape.onrender.com/";
+const baseUrl = "https://api-suape.onrender.com";
 // localização padrão (porto de suape)
 iframe.src = `https://maps.google.com/maps?q=${latitude},${longitude}&z=15&output=embed`;
 // obtendo a localização do usuário
@@ -37,6 +38,7 @@ const options =
     },
     method: "GET",
 };
+// fazendo a requisição GET
 fetch(initialUrl, options)
     .then((resposta) => resposta.json())
     .then(data => {
