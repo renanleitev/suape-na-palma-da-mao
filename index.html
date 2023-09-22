@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="./css//bootstrap.min.css">
     <title>Suape na Palma da Mão</title>
@@ -85,14 +86,14 @@
     </dialog>
     <!-- Error screen -->
     <dialog class="dialog-container" id="error">
-        <div class="alert alert-danger text-nowrap m-0" role="alert">
+        <div class="alert alert-danger m-0" role="alert">
             Consulta inválida.
         </div>
     </dialog>
     <!-- Offline screen -->
     <dialog class="dialog-container" id="offline">
-        <div class="alert alert-danger text-nowrap m-0" role="alert">
-            Sem conexão com o servidor. Internet indisponível.
+        <div class="alert alert-danger m-0" role="alert">
+            Sem conexão com o servidor.
         </div>
     </dialog>
     <!-- Warning screen -->
