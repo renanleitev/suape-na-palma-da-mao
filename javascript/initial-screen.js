@@ -6,6 +6,8 @@ const iframe = document.getElementById("google-maps");
 const loading = document.getElementById("loading");
 const error = document.getElementById("error");
 const warning = document.getElementById("warning");
+const offline = document.getElementById("offline");
+const delayTime = 3000;
 // definindo a url base
 // se estiver usando localmente (comentar/descomentar a linha abaixo)
 const baseUrl = "http://localhost:3000";
@@ -21,7 +23,7 @@ function getPositionSuccess(position) {
 }
 function getPositionError() {
     warning.showModal();
-    setTimeout(() => warning.close(), 3000);
+    setTimeout(() => warning.close(), delayTime);
     iframe.src = `https://maps.google.com/maps?q=${latitude},${longitude}&z=15&output=embed`;
 }
 navigator.geolocation.getCurrentPosition(getPositionSuccess, getPositionError);
@@ -87,8 +89,8 @@ function searchOption() {
                 if (resposta.status !== 200) {
                     loading.close();
                     error.showModal();
+                    setTimeout(() => error.close(), delayTime);
                     pesquisar.value = '';
-                    setTimeout(() => error.close(), 2000);
                     return;
                 }
                 return resposta.json();
@@ -97,6 +99,11 @@ function searchOption() {
                 createUrlMap(empresa.Latitude, empresa.Longitude);
                 pesquisar.value = '';
                 loading.close();
+            })
+            .catch(() => {
+                loading.close();
+                offline.showModal();
+                setTimeout(() => offline.close(), delayTime);
             });
     } else {
         // se o input estiver vazio, obter os valores pelo select
