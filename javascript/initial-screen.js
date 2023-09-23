@@ -104,8 +104,8 @@ function searchOption() {
             })
             .catch(() => {
                 loading.close();
-                offline.showModal();
-                setTimeout(() => offline.close(), delayTime);
+                error.showModal();
+                setTimeout(() => error.close(), delayTime);
             });
     } else {
         // se o input estiver vazio, obter os valores pelo select
