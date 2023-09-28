@@ -1,0 +1,156 @@
+/* Configurações gerais */
+:root {
+  --cor-verde-principal: #2f7667;
+  --cor-verde-secundaria: #0c5445;
+  --cor-branca-principal: #ffffff;
+  --cor-escura-principal: #000000;
+  --cor-escura-secundaria: #00000096;
+  --cor-azul-principal: #3498db;
+}
+
+* {
+  padding: 0;
+  margin-left: 0;
+  margin-right: 0;
+  font-size: 20px;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+img {
+  padding-top: 10px;
+  padding-bottom: 30px;
+}
+
+h2 {
+  color: gray;
+  padding: 20px;
+  margin: 20px auto 80px;
+  font-size: 38px;
+  font-weight: 300;
+  text-align: center;
+  letter-spacing: 2px;
+  line-height: 1.5;
+}
+
+details {
+  width: 75%;
+  min-height: 5px;
+  max-width: 700px;
+  padding: 45px 70px 45px 45px;
+  margin: 0 auto;
+  position: relative;
+  font-size: 22px;
+  border: 1px solid rgba(0, 0, 0, .1);
+  border-radius: 15px;
+  box-sizing: border-box;
+  transition: all .3s;
+}
+
+details+details {
+  margin-top: 20px;
+}
+
+details[open] {
+  min-height: 50px;
+  background-color: #f6f7f8;
+  box-shadow: 2px 2px 20px rgba(0, 0, 0, .2);
+}
+
+details:hover{
+  border-color: var(--cor-verde-principal);
+}
+
+details p {
+  color: gray;
+  font-weight: 300;
+}
+
+summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+summary:focus {
+  outline: none;
+
+}
+
+summary:focus::after {
+  box-shadow: 0 0 0 5px var(--cor-verde-principal);
+}
+
+summary::-webkit-details-marker {
+  display: none
+}
+
+.control-icon {
+  fill: var(--cor-verde-principal);
+  transition: .3s ease;
+  pointer-events: none;
+}
+
+.control-icon-close {
+  display: none;
+}
+
+details[open] .control-icon-close {
+  display: initial;
+  transition: .3s ease;
+}
+
+details[open] .control-icon-expand {
+  display: none;
+}
+
+.text-paragraph {
+  color: gray;
+}
+
+/* Configurações do container principal */
+.main-container {
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: var(--cor-branca-principal);
+}
+
+.secondary-container {
+  padding: 20px;
+}
+
+/* Configurações do header */
+.header {
+  padding: 20px;
+  padding-bottom: 0;
+  display: flex;
+  flex-direction: row;
+  background-color: var(--cor-verde-principal);
+  justify-content: center;
+  align-items: center;
+}
+
+.header-title {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.menu-sidebar {
+  background-color: transparent;
+  border: none;
+  transform: rotate(90deg);
+  margin-bottom: 15px;
+  color: var(--cor-branca-principal);
+}
+
+/* Sobrescrevendo configurações do bootsrap */
+.offcanvas {
+  background-color: var(--cor-verde-principal) !important;
+}

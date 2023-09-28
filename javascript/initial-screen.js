@@ -8,7 +8,7 @@ const error = document.getElementById("error");
 const warning = document.getElementById("warning");
 const offline = document.getElementById("offline");
 // delay para exibir os avisos na tela
-const delayTime = 3000;
+const delayTime = 2000;
 // definindo a url base
 // se estiver usando localmente (comentar/descomentar a linha abaixo)
 // const baseUrl = "http://localhost:3000";
