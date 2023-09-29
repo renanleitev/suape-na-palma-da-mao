@@ -16,6 +16,10 @@
     font-size: 20px;
 }
 
+a:link {
+    color: var(--cor-branca-principal);
+}
+
 html {
     overflow: hidden;
     width: 100%;
@@ -73,6 +77,15 @@ iframe {
 .toggle-pesquisar {
     position: absolute;
     bottom: 120px;
+}
+
+.toggle-info {
+    position: absolute;
+    bottom: 180px;
+}
+
+.inactive {
+    display: none;
 }
 
 .pesquisar-container {

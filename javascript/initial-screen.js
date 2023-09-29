@@ -7,6 +7,15 @@ const loading = document.getElementById("loading");
 const error = document.getElementById("error");
 const warning = document.getElementById("warning");
 const offline = document.getElementById("offline");
+// botão de mostrar informações da empresa
+const btnEmpresa = document.getElementById("btn-empresa");
+// obtendo as informações das empresas
+const empresaNome = document.getElementById('empresa-nome');
+const empresaAtividade = document.getElementById('empresa-atividade');
+const empresaEndereco = document.getElementById('empresa-endereco');
+const empresaContato = document.getElementById('empresa-contato');
+// armazenando as empresas obtidas com a api
+const listaEmpresas = [];
 // delay para exibir os avisos na tela
 const delayTime = 2000;
 // definindo a url base
@@ -44,6 +53,7 @@ fetch(initialUrl, options)
     .then(data => {
         // adicionando nas opções
         data.forEach(empresa => {
+            listaEmpresas.push(empresa);
             const option = document.createElement("option");
             option.text = empresa.Nome;
             option.value = `${empresa.Latitude},${empresa.Longitude}`;
@@ -61,7 +71,7 @@ function createUrlMap(destinationLatitude, destinationLongitude) {
     const destino = {
         lat: destinationLatitude,
         lon: destinationLongitude
-    }
+    };
     const coords = [origem, destino];
     let coordinateString = '';
     // fazendo o cálculo da rota
@@ -76,8 +86,37 @@ function createUrlMap(destinationLatitude, destinationLongitude) {
     urlConstruct += `!5e0!3m2!1sen!2sau!4v${epochNow}000!5m2!1sen!2sau`;
     iframe.src = urlConstruct;
 }
+// Exibindo informações da empresa selecionada
+function splitPhoneNumber(contato){
+    const listaContato = contato.split(',');
+    listaContato.forEach((telefone) => {
+        const quebraLinha = document.createElement("br");
+        const telefoneNumero = document.createElement("a");
+        telefoneNumero.innerHTML = telefone;
+        telefoneNumero.href = `tel:${telefone}`;
+        empresaContato.appendChild(telefoneNumero);
+        empresaContato.appendChild(quebraLinha);
+    })
+
+}
+function showCompanyInfo(empresa) {
+    empresaNome.innerHTML += empresa.Nome;
+    empresaAtividade.innerHTML += empresa.Atividade;
+    empresaEndereco.innerHTML += empresa.Endereço;
+    splitPhoneNumber(empresa.Contato);
+}
+function resetCompanyInfo(){
+    empresaNome.innerHTML = "Nome: ";
+    empresaAtividade.innerHTML = "Atividade: ";
+    empresaEndereco.innerHTML = "Endereço: ";
+    empresaContato.innerHTML = "Contato: ";
+}
 // obtendo os valores pelo input
 function searchOption() {
+    // mostrando informações da empresa
+    btnEmpresa.classList.remove("d-none");
+    // resetando as informações da empresa
+    resetCompanyInfo();
     // obtendo os valores do input de pesquisar
     const pesquisar = document.getElementById('pesquisar');
     const consulta = pesquisar.value;
@@ -99,6 +138,7 @@ function searchOption() {
             })
             .then(empresa => {
                 createUrlMap(empresa.Latitude, empresa.Longitude);
+                showCompanyInfo(empresa);
                 pesquisar.value = '';
                 loading.close();
             })
@@ -110,8 +150,15 @@ function searchOption() {
     } else {
         // se o input estiver vazio, obter os valores pelo select
         const coordenadasEmpresa = document.getElementById("empresas").value;
-        const [empresaLatitude, empresaLongitude] = coordenadasEmpresa.split(',');
-        createUrlMap(empresaLatitude, empresaLongitude);
+        if (coordenadasEmpresa) {
+            const [empresaLatitude, empresaLongitude] = coordenadasEmpresa.split(',');
+            const empresa = listaEmpresas.find((empresa) => empresa.Latitude === empresaLatitude);
+            showCompanyInfo(empresa);
+            createUrlMap(empresaLatitude, empresaLongitude);
+        } else {
+            error.showModal();
+            setTimeout(() => error.close(), delayTime);
+        }
     }
 
 }
