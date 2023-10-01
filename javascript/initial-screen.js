@@ -29,10 +29,10 @@ const empresaContato = document.getElementById('empresa-contato');
 const delayTime = 2000;
 // armazenando as empresas obtidas com a api
 let listaEmpresas = [];
-// armazenando as empresas adicionadas ao itinerário (se não houver, a lista é vazia)
-let listaEmpresasItinerario = JSON.parse(localStorage.getItem("itinerario")) || [];
-// salvando o histórico do itinerario
-let listaEmpresasItinerarioHistorico = [];
+// armazenando as empresas adicionadas ao itinerário
+let listaEmpresasItinerario = [];
+// salvando o histórico do itinerario (se não houver, o histórico fica vazio)
+let listaEmpresasItinerarioHistorico =  JSON.parse(localStorage.getItem("itinerario")) || [];
 // armazenando as coordenadas das empresas
 let listaEmpresasCoordenadas = [];
 // index da empresa (para mostrar informações)
