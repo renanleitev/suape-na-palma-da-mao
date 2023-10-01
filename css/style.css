@@ -162,6 +162,10 @@ iframe {
     color: var(--cor-branca-principal);
 }
 
+.itinerario-confirm {
+    min-width: 300px;
+}
+
 /* Botão de adicionar do itinerário */
 .adicionar-button{
     border-radius: 20px;
