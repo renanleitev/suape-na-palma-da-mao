@@ -1,18 +1,18 @@
 const empresa = {
-    id: 84,
-    Nome: 'ZIRAN NORDESTE',
-    Atividade: 'Transporte Rodoviário de Cargas e DEPOT',
-    Município: 'Ipojuca',
-    Polo: 'Logística',
-    Endereço: 'Rodovia PE-60, km 10, Ipojuca, PE',
-    Contato: '+55 (81) 3079-8966',
-    Latitude: '-8.395811617662497',
-    Longitude: '-35.02199531305593'
+    id: 4,
+    Nome: "AMCOR DO NORDESTE INDÚSTRIA E COMÉRCIO DE EMBALAGENS LTDA",
+    Atividade: "Fabricação de embalagens em material plástico",
+    Município: "Cabo de Santo Agostinho",
+    Polo: "Preforma PET e Plástico",
+    Endereço: "Rodovia PE-60, s/n, 54520-600  Cabo de Santo Agostinho, PE",
+    Contato: "+55 81 3201-9510",
+    Latitude: '-8.332482145893096',
+    Longitude: '-34.99222408100839'
 };
 
 const id = empresa.id;
 
-const url = `http://localhost:3000/empresa/${id}`;
+const url = `https://api-suape.onrender.com/empresa/${id}`;
 
 fetch(
     url,
@@ -24,5 +24,5 @@ fetch(
         method: "PATCH",
         body: JSON.stringify(empresa)
     })
-    .then(function(res){ console.log(res) })
-    .catch(function(res){ console.log(res) })
+    .then(function(){ console.log("atualização bem-sucedida") })
+    .catch(function(res){ console.log("deu erro", res) })

@@ -17,7 +17,6 @@ const restaurarItinerario = document.getElementById("restaurar-itinerario");
 const vazioItinerario = document.getElementById("vazio-itinerario");
 const vazioHistoricoItinerario = document.getElementById("vazio-historico-itinerario");
 const errorItinerario = document.getElementById("error-itinerario");
-const errorNaoItinerario = document.getElementById("error-nao-itinerario");
 // mensagem padrão do itinerario
 const defaultItineario = document.getElementById("default-itinerario");
 // mensagem padrão do histórico do itinerario
@@ -155,19 +154,23 @@ function addToHistoryJourney(empresa) {
     itinerarioHistoricoLista.appendChild(itinerarioItem);
 }
 // removendo empresa do itinerario
-function removeCompanyFromJourney(empresa) {
+function removeCompanyFromJourney() {
     try {
+        // removendo a última empresa do itinerario e das coordenadas
+        listaEmpresasItinerario.pop();
+        listaEmpresasCoordenadas.pop();
         // se o itinerario estiver vazio, exibir mensagem
         if (listaEmpresasItinerario.length === 0) {
             defaultItineario.innerHTML = "Nenhum itinerário disponível.";
         }
         // removendo a empresa da lista de itinerario
-        document.getElementById(empresa.Nome).remove();
-        // removendo a empresa da lista de coordenadas
-        listaEmpresasCoordenadas = listaEmpresasCoordenadas.filter(coordenadas => coordenadas.lat !== empresa.Latitude);
+        const itinerarioLista = document.getElementById("itinerario-lista");
+        itinerarioLista.removeChild(itinerarioLista.lastChild);
+        // checando se há ou não empresas no itinerario
+        checkItinerario();
     } catch(e) {
         // se a empresa não estiver no itinerario, exibir mensagem de erro
-        errorNaoItinerario.showModal();
+       console.log(e);
     }
 }
 // salvando os dados das empresas em um array
@@ -224,44 +227,10 @@ function addCompany() {
 }
 // removendo empresas do itinerario
 function removeCompany() {
-    // obtendo os valores do input de pesquisar
-    const pesquisar = document.getElementById('pesquisar');
-    const consulta = pesquisar.value;
-    // se o input não estiver vazio
-    if (consulta !== ''){
-        // procurando a empresa
-        const regex = new RegExp(consulta, 'gi');
-        const empresa = listaEmpresasItinerario.find(empresa => empresa.Nome.match(regex));
-        // se a empresa for encontrada, remover ela
-        if (empresa) {
-            // removendo a empresa do itinerario
-            listaEmpresasItinerario = listaEmpresasItinerario.filter(empresa => !empresa.Nome.match(regex));
-            removeCompanyFromJourney(empresa);
-            // checando se há ou não empresas no itinerario
-            checkItinerario();
-        } else {
-            // se a empresa não for encontrada
-            error.showModal();
-        }
+    if (listaEmpresasItinerario.length === 0) {
+        vazioItinerario.showModal();
     } else {
-        // se o input estiver vazio, obter os valores pelo select
-        const coordenadasEmpresa = document.getElementById("empresas").value;
-        // separando os valores obtidos pelo valor do select
-        const [empresaLatitude, empresaLongitude] = coordenadasEmpresa.split(',');
-        // encontrando a empresa, pela latitude
-        const empresaEncontrada = listaEmpresasItinerario.find((empresa) => empresa.Latitude === empresaLatitude);
-        // se a empresa for encontrada, remover ela
-        if (empresaEncontrada) {
-            // removendo a empresa do itinerario
-            const regex = new RegExp(empresaEncontrada.Nome, 'gi');
-            listaEmpresasItinerario = listaEmpresasItinerario.filter(empresa => !empresa.Nome.match(regex));
-            removeCompanyFromJourney(empresaEncontrada);
-            // checando se há ou não empresas no itinerario
-            checkItinerario();
-        } else {
-            // se a empresa não estiver no itinerario
-            errorNaoItinerario.showModal();
-        }
+        removeCompanyFromJourney();
     }
 }
 // obtendo a url para o iframe
@@ -513,9 +482,6 @@ function closeApagarHistoricoItinerarioSucesso() {
 }
 function closeErrorItinerario() {
     errorItinerario.close();
-}
-function closeErrorNaoItinerario() {
-    errorNaoItinerario.close();
 }
 function closeOffline() {
     offline.close();
