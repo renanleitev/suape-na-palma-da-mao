@@ -29,8 +29,8 @@ const empresaContato = document.getElementById('empresa-contato');
 const delayTime = 2000;
 // armazenando as empresas obtidas com a api
 let listaEmpresas = [];
-// armazenando as empresas adicionadas ao itinerário
-let listaEmpresasItinerario = [];
+// armazenando as empresas adicionadas ao itinerário (se não houver, a lista é vazia)
+let listaEmpresasItinerario = JSON.parse(localStorage.getItem("itinerario")) || [];
 // salvando o histórico do itinerario
 let listaEmpresasItinerarioHistorico = [];
 // armazenando as coordenadas das empresas
@@ -128,8 +128,6 @@ function addToListJourney(empresa) {
     const itinerarioItem = document.createElement("li");
     // o texto de cada item da lista será o nome da empresa
     itinerarioItem.innerHTML = empresa.Nome;
-    // o id de cada item da lista será o nome da empresa
-    itinerarioItem.id = empresa.Nome;
     // definindo as cores para o texto
     itinerarioItem.style.color = "black";
     // adicionando a empresa a lista de itinerario
