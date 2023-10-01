@@ -16,11 +16,10 @@ const salvarItinerario = document.getElementById("salvar-itinerario");
 const restaurarItinerario = document.getElementById("restaurar-itinerario");
 const vazioItinerario = document.getElementById("vazio-itinerario");
 const vazioHistoricoItinerario = document.getElementById("vazio-historico-itinerario");
-const errorItinerario = document.getElementById("error-itinerario");
 // mensagem padrão do itinerario
-const defaultItineario = document.getElementById("default-itinerario");
+const defaultItinerario = document.getElementById("default-itinerario");
 // mensagem padrão do histórico do itinerario
-const defaultItinearioHistorico = document.getElementById("default-itinerario-historico");
+const defaultItinerarioHistorico = document.getElementById("default-itinerario-historico");
 // obtendo as informações das empresas
 const empresaNome = document.getElementById('empresa-nome');
 const empresaAtividade = document.getElementById('empresa-atividade');
@@ -69,12 +68,12 @@ const options =
     },
     method: "GET",
 };
+// checando se há ou não empresas no itinerario
+checkItinerario();
 // fazendo a requisição GET
 fetch(initialUrl, options)
     .then((resposta) => resposta.json())
     .then(data => {
-        // checando se há ou não empresas no itinerario
-        checkItinerario();
         // ordenando os dados em ordem alfabetica e salvando em um array
         // https://stackoverflow.com/questions/6712034/sort-array-by-firstname-alphabetically-in-javascript
         listaEmpresas = data.sort((a, b) => a.Nome.localeCompare(b.Nome))
@@ -122,7 +121,7 @@ function checkItinerario() {
 // adicionando empresa ao itinerario
 function addToListJourney(empresa) {
     // removendo a mensagem de nenhum itinerario
-    defaultItineario.innerHTML = "";
+    defaultItinerario.innerHTML = "";
     // adicionando a empresa na lista de itinerario
     const itinerarioLista = document.getElementById("itinerario-lista");
     // criando um elemento li (item) para adicionar a lista de itinerario
@@ -139,7 +138,7 @@ function addToListJourney(empresa) {
 // adicionando empresa ao historico de itinerario
 function addToHistoryJourney(empresa) {
     // removendo a mensagem de nenhum itinerario
-    defaultItinearioHistorico.innerHTML = "";
+    defaultItinerarioHistorico.innerHTML = "";
     // adicionando a empresa na lista de itinerario
     const itinerarioHistoricoLista = document.getElementById("itinerario-historico-lista");
     // criando um elemento li (item) para adicionar a lista de itinerario
@@ -161,7 +160,7 @@ function removeCompanyFromJourney() {
         listaEmpresasCoordenadas.pop();
         // se o itinerario estiver vazio, exibir mensagem
         if (listaEmpresasItinerario.length === 0) {
-            defaultItineario.innerHTML = "Nenhum itinerário disponível.";
+            defaultItinerario.innerHTML = "Nenhum itinerário disponível.";
         }
         // removendo a empresa da lista de itinerario
         const itinerarioLista = document.getElementById("itinerario-lista");
@@ -192,45 +191,80 @@ function addCompany() {
     if (consulta !== ''){
         // procurando a empresa
         const regex = new RegExp(consulta, 'gi');
-        const empresaEstaItinerario = listaEmpresasItinerario.find(empresa => empresa.Nome.match(regex));
-        if (empresaEstaItinerario) {
-            // se a empresa já estiver no itinerario, não pode ser adicionada
-            errorItinerario.showModal();
-        } else {
-            const empresaEncontrada = listaEmpresas.find(empresa => empresa.Nome.match(regex));
-            // se a empresa for encontrada
-            if (empresaEncontrada) {
-                addCompanyToJourney(empresaEncontrada);
-                // checando se há ou não empresas no itinerario
-                checkItinerario();
-            } else {
-                // se a empresa não for encontrada
-                error.showModal();
-            }
-        }
-    } else {
-        // se o input estiver vazio, obter os valores pelo select
-        const coordenadasEmpresa = document.getElementById("empresas").value;
-        const [empresaLatitude, empresaLongitude] = coordenadasEmpresa.split(',');
-        const empresaEncontrada = listaEmpresas.find((empresa) => empresa.Latitude === empresaLatitude);
-        const regex = new RegExp(empresaEncontrada.Nome, 'gi');
-        const empresaEstaItinerario = listaEmpresasItinerario.find(empresa => empresa.Nome.match(regex));
-        if (empresaEstaItinerario) {
-            // se a empresa já estiver no itinerario, não pode ser adicionada
-            errorItinerario.showModal();
-        } else {
+        const empresaEncontrada = listaEmpresas.find(empresa => empresa.Nome.match(regex));
+        // se a empresa for encontrada
+        if (empresaEncontrada) {
             addCompanyToJourney(empresaEncontrada);
             // checando se há ou não empresas no itinerario
             checkItinerario();
+        } else {
+            // se a empresa não for encontrada
+            error.showModal();
         }
+    } else {
+        // se o input estiver vazio, obter os valores pelo select
+        const empresasSelect = document.getElementById("empresas");
+        // obtendo o nome da empresa
+        const empresaSelecionada = empresasSelect.options[empresasSelect.selectedIndex].text;
+        // obtendo os dados completos da empresa
+        const empresaEncontrada = listaEmpresas.find((empresa) => empresa.Nome === empresaSelecionada);
+        // adicionando empresa ao itinerario
+        addCompanyToJourney(empresaEncontrada);
+        // checando se há ou não empresas no itinerario
+        checkItinerario();
     }
 }
 // removendo empresas do itinerario
 function removeCompany() {
     if (listaEmpresasItinerario.length === 0) {
+        // se o itinerario estiver vazio, exibir mensagem de itinerario vazio
         vazioItinerario.showModal();
     } else {
+        // se o itinerario não estiver vazio, remover empresa do itinerario
         removeCompanyFromJourney();
+    }
+}
+// invertendo o itinerario
+function invertJourney() {
+    if (listaEmpresasItinerario.length === 0) {
+        // se o itinerário estiver vazio, exibir mensagem de itinerario vazio
+        defaultItinerario.innerHTML = "Nenhum itinerário disponível.";
+    } else {
+        // se o itinerário não estiver vazio, apagar mensagem anterior
+        defaultItinerario.innerHTML = "";
+        // invertendo a lista de itinerario
+        listaEmpresasItinerario.reverse();
+        // invertendo as coordenadas
+        listaEmpresasCoordenadas.reverse();
+        const itinerarioLista = document.getElementById("itinerario-lista");
+        // a lista fica vazia
+        itinerarioLista.innerHTML = "";
+        // para cada empresa no itinerario, ela é adicionada a lista de itinerario
+        listaEmpresasItinerario.forEach((empresa) => {
+            addToListJourney(empresa);
+        });
+    }
+}
+// invertendo o historico do itinerario
+function invertHistoryJourney() {
+    if (listaEmpresasItinerarioHistorico.length === 0){
+        // se o histórico de itinerario estiver vazio, exibir mensagem de histórico vazio
+        defaultItinerarioHistorico.innerHTML = "Nenhum histórico de itinerário disponível.";
+    } else {
+        // se o histórico de itinerario não estiver vazio, apagar mensagem anterior
+        defaultItinerarioHistorico.innerHTML = "";
+        // invertendo a lista de itinerario
+        listaEmpresasItinerarioHistorico.reverse();
+        // selecionando a lista de histórico de itinerario
+        const itinerarioHistoricoLista = document.getElementById("itinerario-historico-lista");
+        // a lista fica vazia
+        itinerarioHistoricoLista.innerHTML = "";
+        // para cada empresa no histórico, ela é adicionada a lista de histórico de itinerário
+        listaEmpresasItinerarioHistorico.forEach((empresa) => {
+            addToHistoryJourney(empresa);
+        });
+        // salvando no historico
+        localStorage.setItem("itinerario", JSON.stringify(listaEmpresasItinerarioHistorico));
     }
 }
 // obtendo a url para o iframe
@@ -290,7 +324,7 @@ function showHistoryJourney() {
     // se o historico estiver vazio, exibir mensagem de historico vazio
     if (!listaEmpresasItinerarioHistorico || listaEmpresasItinerarioHistorico.length === 0) {
         // exibindo mensagem de histórico vazio
-        defaultItinearioHistorico.innerHTML = "Nenhum histórico de itinerário disponível.";
+        defaultItinerarioHistorico.innerHTML = "Nenhum histórico de itinerário disponível.";
     } else {
         // selecionando a lista de histórico
         const itinerarioHistoricoLista = document.getElementById("itinerario-historico-lista");
@@ -371,7 +405,7 @@ function resetJourney() {
     // a lista fica vazia
     itinerarioLista.innerHTML = "";
     // exibindo mensagem de nenhum itinerario disponível
-    defaultItineario.innerHTML = "Nenhum itinerário disponível.";
+    defaultItinerario.innerHTML = "Nenhum itinerário disponível.";
     // fechando o modal de apagar itinerario
     apagarItinerario.close();
     // abrindo o modal de itinerario apagado com sucesso
@@ -390,7 +424,7 @@ function resetHistoryJourney() {
     // a lista de histórico fica vazia
     itinerarioHistoricoLista.innerHTML = "";
     // exibindo mensagem de nenhum histórico de itinerario disponível
-    defaultItinearioHistorico.innerHTML = "Nenhum histórico de itinerário disponível.";
+    defaultItinerarioHistorico.innerHTML = "Nenhum histórico de itinerário disponível.";
     // fechando o modal de apagar histórico de itinerario
     apagarHistoricoItinerario.close();
     // abrindo o modal de histórico itinerario apagado com sucesso
@@ -479,9 +513,6 @@ function closeApagarHistoricoItinerario() {
 }
 function closeApagarHistoricoItinerarioSucesso() {
     apagarHistoricoItinerarioSucesso.close();
-}
-function closeErrorItinerario() {
-    errorItinerario.close();
 }
 function closeOffline() {
     offline.close();
