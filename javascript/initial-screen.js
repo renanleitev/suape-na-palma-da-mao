@@ -117,6 +117,8 @@ function addToListJourney(empresa) {
     itinerarioItem.innerHTML = empresa.Nome;
     // o id de cada item da lista será o nome da empresa
     itinerarioItem.id = empresa.Nome;
+    // definindo as cores para o texto
+    itinerarioItem.style.color = "black";
     // adicionando a empresa a lista de itinerario
     itinerarioLista.appendChild(itinerarioItem);
 }
@@ -273,8 +275,8 @@ function splitPhoneNumber(contato){
 // mostrando informação da empresa
 function showCompanyInfo(empresa) {
     empresaNome.innerHTML = empresa.Nome;
-    empresaAtividade.innerHTML = empresa.Atividade;
-    empresaEndereco.innerHTML = empresa.Endereço;
+    empresaAtividade.innerHTML = "Atividade: " + empresa.Atividade;
+    empresaEndereco.innerHTML = "Endereço: " + empresa.Endereço;
     splitPhoneNumber(empresa.Contato);
 }
 function resetJourneyConfirmation() {
@@ -288,6 +290,8 @@ function resetJourney(){
     itinerarioLista.innerHTML = "";
     defaultItineario.innerHTML = "Nenhum itinerário disponível.";
     apagarItinerario.close();
+    // removendo o botão de mostrar informações das empresas
+    btnEmpresa.classList.add("d-none");
     checkItinerario();
 }
 // mostrando as informações da empresa anterior
@@ -306,7 +310,7 @@ function nextCompany() {
 }
 // realizando a pesquisa
 function searchOption() {
-    // mostrando informações da empresa
+    // mostrando informações das empresas
     btnEmpresa.classList.remove("d-none");
     const select = document.getElementById("empresas");
     // se não houver nenhuma empresa no select === api offline

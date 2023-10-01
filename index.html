@@ -103,7 +103,7 @@
                     </button>
                     <!-- Botão de adicionar ao itinerário -->
                     <button onclick="removeCompany()" class="btn-danger remover-button flex-fill" id="remover-empresa"
-                        aria-label="Remover empresas" type="button"> 
+                        aria-label="Remover empresas" type="button">
                         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
                             class="bi bi-building-dash" viewBox="0 0 16 16">
                             <path
@@ -137,11 +137,11 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body itinerario-body">
-                    <p id="default-itinerario">Nenhum itinerário disponível.</p>
-                    <ul id="itinerario-lista"></ul>
+                    <p class="text-dark" id="default-itinerario">Nenhum itinerário disponível.</p>
+                    <ul class="text-dark" id="itinerario-lista"></ul>
                 </div>
                 <div class="modal-footer d-flex flex-row justify-content-center itinerario-body">
-                    <button type="button" onclick="resetJourneyConfirmation()" class="btn btn-primary">
+                    <button type="button" onclick="resetJourneyConfirmation()" class="btn btn-danger">
                         Apagar itinerário
                     </button>
                 </div>
@@ -153,7 +153,15 @@
         aria-labelledby="empresas-info-label">
         <div class="d-flex flex-column justify-content-center align-items-center">
             <div class="border-success mb-3" style="max-width: 20rem;">
-                <div class="card-header" id="empresa-nome"></div>
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <a onclick="previousCompany()" class="control-prev" role="button">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    </a>
+                    <span class="text-center" id="empresa-nome"></span>
+                    <a onclick="nextCompany()" class="control-next" role="button">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    </a>
+                </div>
                 <div class="card-body text-success">
                     <p class="card-text" id="empresa-atividade"></p>
                     <p class="card-text" id="empresa-endereco"></p>
@@ -161,14 +169,6 @@
                 </div>
             </div>
         </div>
-        <a onclick="previousCompany()" class="carousel-control-prev" href="#carouselExampleIndicators" role="button"
-            data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        </a>
-        <a onclick="nextCompany()" class="carousel-control-next" href="#carouselExampleIndicators" role="button"
-            data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        </a>
     </div>
     <!-- Loading screen -->
     <dialog class="dialog-container" id="loading">
@@ -207,7 +207,8 @@
         <div class="alert alert-warning m-0" role="alert">
             Apagar itinerário? Essa ação é irreversível.
             <div class="modal-footer d-flex flex-row justify-content-center">
-                <button type="button" class="btn btn-primary inline-button" onclick="closeApagarItinerario()" aria-label="Close">
+                <button type="button" class="btn btn-primary inline-button" onclick="closeApagarItinerario()"
+                    aria-label="Close">
                     Cancelar
                 </button>
                 <button type="button" onclick="resetJourney()" class="btn btn-danger inline-button" aria-label="Apagar">
@@ -225,4 +226,5 @@
 </body>
 <script src="./javascript/initial-screen.js"></script>
 <script src="./javascript/bootstrap.bundle.min.js"></script>
+
 </html>
