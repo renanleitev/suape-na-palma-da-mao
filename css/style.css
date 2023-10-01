@@ -2,10 +2,14 @@
 :root {
     --cor-verde-principal: #2f7667;
     --cor-verde-secundaria: #0c5445;
-    --cor-branca-principal: #ffffff;
+    --cor-branca-principal: white;
     --cor-escura-principal: #000000;
     --cor-escura-secundaria: #00000096;
     --cor-azul-principal: #3498db;
+    --cor-azul-secundaria: #0273be;
+    --cor-vermelha-principal: rgba(255, 0, 0, 0.911);
+    --cor-vermelha-secundaria: rgba(99, 6, 6, 0.911);
+    --cor-cinza-principal: gray;
 }
 
 * {
@@ -141,7 +145,37 @@ iframe {
     border-radius: 20px;
     padding: 10px;
     /* acrescentando margem direita da seta select */
-    border-right: 16px solid transparent
+    border-right: 16px solid transparent;
+}
+
+/* Modal do itinerário */
+.itinerario-header {
+    background-color: var(--cor-verde-secundaria);
+}
+
+.itinerario-body {
+    background-color: var(--cor-verde-principal);
+}
+
+.itinerario-count {
+    background-color: var(--cor-azul-principal);
+    color: var(--cor-branca-principal);
+}
+
+/* Botão de adicionar do itinerário */
+.adicionar-button{
+    border-radius: 20px;
+    /* padding: 10px; */
+    border: none;
+    margin-right: 5px;
+}
+
+/* Botão de remover do itinerário */
+.remover-button{
+    border-radius: 20px;
+    /* padding: 10px; */
+    border: none;
+    margin-right: 5px;
 }
 
 /* Dialog container */
