@@ -1,11 +1,13 @@
 // definindo as coordenadas iniciais
 let latitude = -8.394097983524112;
 let longitude = -34.97408204488957;
-// obtendo os containers de mensagem
+// obtendo o iframe do mapa
 const iframe = document.getElementById("google-maps");
+// obtendo os containers de mensagem
 const loading = document.getElementById("loading");
 const error = document.getElementById("error");
 const warning = document.getElementById("warning");
+const apagarItinerario = document.getElementById("apagar-itinerario");
 const offline = document.getElementById("offline");
 const errorItinerario = document.getElementById("error-itinerario");
 const errorNaoItinerario = document.getElementById("error-nao-itinerario");
@@ -26,6 +28,8 @@ let listaEmpresas = [];
 let listaEmpresasItinerario = [];
 // armazenando as coordenadas das empresas
 let listaEmpresasCoordenadas = [];
+// index da empresa (para mostrar informações)
+let empresaIndex = 0;
 // definindo a url base
 // se estiver usando localmente (comentar/descomentar a linha abaixo)
 // const baseUrl = "http://localhost:3000";
@@ -246,6 +250,8 @@ function createUrlMap(coordenadas) {
 }
 // exibindo informações da empresa selecionada
 function splitPhoneNumber(contato){
+    // zerando os números de telefone, quando trocar de empresa
+    empresaContato.innerHTML = "";
     // separando os números de telefone, se houver mais de um
     const listaContato = contato.split(',');
     // para cada número de telefone, criar um link para ligar
@@ -264,29 +270,50 @@ function splitPhoneNumber(contato){
         empresaContato.appendChild(quebraLinha);
     })
 }
+// mostrando informação da empresa
 function showCompanyInfo(empresa) {
-    empresaNome.innerHTML += empresa.Nome;
-    empresaAtividade.innerHTML += empresa.Atividade;
-    empresaEndereco.innerHTML += empresa.Endereço;
+    empresaNome.innerHTML = empresa.Nome;
+    empresaAtividade.innerHTML = empresa.Atividade;
+    empresaEndereco.innerHTML = empresa.Endereço;
     splitPhoneNumber(empresa.Contato);
 }
-function resetCompanyInfo(){
-    empresaNome.innerHTML = "Nome: ";
-    empresaAtividade.innerHTML = "Atividade: ";
-    empresaEndereco.innerHTML = "Endereço: ";
-    empresaContato.innerHTML = "Contato: ";
+function resetJourneyConfirmation() {
+    apagarItinerario.showModal();
+}
+// resetando as informações da empresa
+function resetJourney(){
+    listaEmpresasItinerario = [];
+    // removendo as empresas da lista de itinerario
+    const itinerarioLista = document.getElementById("itinerario-lista");
+    itinerarioLista.innerHTML = "";
+    defaultItineario.innerHTML = "Nenhum itinerário disponível.";
+    apagarItinerario.close();
+    checkItinerario();
+}
+// mostrando as informações da empresa anterior
+function previousCompany() {
+    if (empresaIndex > 0) {
+        empresaIndex--;
+        showCompanyInfo(listaEmpresasItinerario[empresaIndex]);
+    }
+}
+// mostrando as informações da empresa seguinte
+function nextCompany() {
+    if (empresaIndex < listaEmpresasItinerario.length - 1) {
+        empresaIndex++;
+        showCompanyInfo(listaEmpresasItinerario[empresaIndex]);
+    }
 }
 // realizando a pesquisa
 function searchOption() {
     // mostrando informações da empresa
     btnEmpresa.classList.remove("d-none");
-    // resetando as informações da empresa
-    resetCompanyInfo();
     const select = document.getElementById("empresas");
     // se não houver nenhuma empresa no select === api offline
     if (select.options.length === 0) {
         offline.showModal();
     } else {
+        showCompanyInfo(listaEmpresasItinerario[0]);
         createUrlMap(listaEmpresasCoordenadas);
     }
 }
@@ -313,6 +340,9 @@ function closeWarning(){
 }
 function closeError(){
     error.close();
+}
+function closeApagarItinerario() {
+    apagarItinerario.close();
 }
 function closeErrorItinerario(){
     errorItinerario.close();

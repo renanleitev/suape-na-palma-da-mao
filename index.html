@@ -90,7 +90,7 @@
                 <div class="d-flex justify-content-center">
                     <!-- Botão de adicionar ao itinerário -->
                     <button onclick="addCompany()" class="btn-primary adicionar-button flex-fill" id="adicionar-empresa"
-                        aria-label="Adicionar empresas">
+                        aria-label="Adicionar empresas" type="button">
                         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
                             class="bi bi-building-add" viewBox="0 0 16 16">
                             <path
@@ -103,7 +103,7 @@
                     </button>
                     <!-- Botão de adicionar ao itinerário -->
                     <button onclick="removeCompany()" class="btn-danger remover-button flex-fill" id="remover-empresa"
-                        aria-label="Remover empresas">
+                        aria-label="Remover empresas" type="button"> 
                         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
                             class="bi bi-building-dash" viewBox="0 0 16 16">
                             <path
@@ -115,22 +115,21 @@
                         </svg>
                     </button>
                     <!-- Botão de adicionar ao itinerário -->
-                    <button class="pesquisar-button flex-fill" id="itinerario" type="button"
-                        data-bs-toggle="modal" data-bs-target="#itinerario-info" aria-controls="itinerario-info"
-                        aria-label="itinerario-label">
-                        Itinerário <span class="badge itinerario-count" id="itinerario-count">4</span>
+                    <button class="pesquisar-button flex-fill" id="itinerario" type="button" data-bs-toggle="modal"
+                        data-bs-target="#itinerario-info" aria-controls="itinerario-info" aria-label="itinerario-label">
+                        Itinerário <span class="badge itinerario-count" id="itinerario-count">0</span>
                     </button>
                 </div>
                 <!-- Botão de pesquisa -->
-                <button onclick="searchOption()" class="pesquisar-button" id="pesquisar-button" aria-label="Pesquisar empresas">
+                <button onclick="searchOption()" class="pesquisar-button" id="pesquisar-button"
+                    aria-label="Pesquisar empresas">
                     Ir
                 </button>
             </div>
         </div>
     </div>
     <!-- Container para o itinerário -->
-    <div class="modal fade" id="itinerario-info" aria-labelledby="itinerario-info-label"
-        aria-hidden="true">
+    <div class="modal fade" id="itinerario-info" aria-labelledby="itinerario-info-label" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header itinerario-header">
@@ -141,6 +140,11 @@
                     <p id="default-itinerario">Nenhum itinerário disponível.</p>
                     <ul id="itinerario-lista"></ul>
                 </div>
+                <div class="modal-footer d-flex flex-row justify-content-center itinerario-body">
+                    <button type="button" onclick="resetJourneyConfirmation()" class="btn btn-primary">
+                        Apagar itinerário
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -148,15 +152,23 @@
     <div class="offcanvas offcanvas-bottom h-auto" tabindex="-1" id="empresas-info"
         aria-labelledby="empresas-info-label">
         <div class="d-flex flex-column justify-content-center align-items-center">
-            <div class="border-success mb-3" style="max-width: 18rem;">
-                <div class="card-header" id="empresa-nome">Nome da Empresa</div>
+            <div class="border-success mb-3" style="max-width: 20rem;">
+                <div class="card-header" id="empresa-nome"></div>
                 <div class="card-body text-success">
-                    <p class="card-text" id="empresa-atividade">Atividade:</p>
-                    <p class="card-text" id="empresa-endereco">Endereço:</p>
-                    <p class="card-text" id="empresa-contato">Contato:</p>
+                    <p class="card-text" id="empresa-atividade"></p>
+                    <p class="card-text" id="empresa-endereco"></p>
+                    <p class="card-text" id="empresa-contato"></p>
                 </div>
             </div>
         </div>
+        <a onclick="previousCompany()" class="carousel-control-prev" href="#carouselExampleIndicators" role="button"
+            data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        </a>
+        <a onclick="nextCompany()" class="carousel-control-next" href="#carouselExampleIndicators" role="button"
+            data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        </a>
     </div>
     <!-- Loading screen -->
     <dialog class="dialog-container" id="loading">
@@ -166,28 +178,42 @@
     <dialog onclick="dialogClickHandler(event)" class="dialog-container" id="error">
         <div class="alert alert-danger modal-header m-0" role="alert">
             Consulta inválida.
-            <button class="btn-close" onclick="closeError()" aria-label="Close"></button>
+            <button type="button" class="btn-close" onclick="closeError()" aria-label="Close"></button>
         </div>
     </dialog>
     <!-- Error "empresa já está no itinerario" screen -->
     <dialog onclick="dialogClickHandler(event)" class="dialog-container" id="error-itinerario">
         <div class="alert alert-danger modal-header m-0" role="alert">
             Empresa já está no itinerário.
-            <button class="btn-close" onclick="closeErrorItinerario()" aria-label="Close"></button>
+            <button type="button" class="btn-close" onclick="closeErrorItinerario()" aria-label="Close"></button>
         </div>
     </dialog>
     <!-- Error "empresa não está no itinerario" screen -->
     <dialog onclick="dialogClickHandler(event)" class="dialog-container" id="error-nao-itinerario">
         <div class="alert alert-danger modal-header m-0" role="alert">
             Empresa não está no itinerário.
-            <button class="btn-close" onclick="closeErrorNaoItinerario()" aria-label="Close"></button>
+            <button type="button" class="btn-close" onclick="closeErrorNaoItinerario()" aria-label="Close"></button>
         </div>
     </dialog>
     <!-- Offline screen -->
     <dialog onclick="dialogClickHandler(event)" class="dialog-container" id="offline">
         <div class="alert alert-danger modal-header m-0" role="alert">
             Sem conexão com o servidor.
-            <button class="btn-close" onclick="closeOffline()" aria-label="Close"></button>
+            <button type="button" class="btn-close" onclick="closeOffline()" aria-label="Close"></button>
+        </div>
+    </dialog>
+    <!-- Apagar itinerario warning screen -->
+    <dialog onclick="dialogClickHandler(event)" class="dialog-container" id="apagar-itinerario">
+        <div class="alert alert-warning m-0" role="alert">
+            Apagar itinerário? Essa ação é irreversível.
+            <div class="modal-footer d-flex flex-row justify-content-center">
+                <button type="button" class="btn btn-primary inline-button" onclick="closeApagarItinerario()" aria-label="Close">
+                    Cancelar
+                </button>
+                <button type="button" onclick="resetJourney()" class="btn btn-danger inline-button" aria-label="Apagar">
+                    Apagar
+                </button>
+            </div>
         </div>
     </dialog>
     <!-- Warning screen -->
@@ -199,5 +225,4 @@
 </body>
 <script src="./javascript/initial-screen.js"></script>
 <script src="./javascript/bootstrap.bundle.min.js"></script>
-
 </html>
