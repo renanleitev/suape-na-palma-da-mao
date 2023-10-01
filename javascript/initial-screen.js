@@ -8,24 +8,33 @@ const loading = document.getElementById("loading");
 const error = document.getElementById("error");
 const warning = document.getElementById("warning");
 const apagarItinerario = document.getElementById("apagar-itinerario");
+const apagarItinerarioSucesso = document.getElementById("apagar-itinerario-sucesso");
+const apagarHistoricoItinerario = document.getElementById("apagar-historico-itinerario");
+const apagarHistoricoItinerarioSucesso = document.getElementById("apagar-historico-itinerario-sucesso");
 const offline = document.getElementById("offline");
+const salvarItinerario = document.getElementById("salvar-itinerario");
+const restaurarItinerario = document.getElementById("restaurar-itinerario");
+const vazioItinerario = document.getElementById("vazio-itinerario");
+const vazioHistoricoItinerario = document.getElementById("vazio-historico-itinerario");
 const errorItinerario = document.getElementById("error-itinerario");
 const errorNaoItinerario = document.getElementById("error-nao-itinerario");
 // mensagem padrão do itinerario
 const defaultItineario = document.getElementById("default-itinerario");
-// botão de mostrar informações da empresa
-const btnEmpresa = document.getElementById("btn-empresa");
+// mensagem padrão do histórico do itinerario
+const defaultItinearioHistorico = document.getElementById("default-itinerario-historico");
 // obtendo as informações das empresas
 const empresaNome = document.getElementById('empresa-nome');
 const empresaAtividade = document.getElementById('empresa-atividade');
 const empresaEndereco = document.getElementById('empresa-endereco');
 const empresaContato = document.getElementById('empresa-contato');
-// delay para exibir os avisos na tela
+// delay para exibir os avisos na tela (2000 = 2 segundos)
 const delayTime = 2000;
 // armazenando as empresas obtidas com a api
 let listaEmpresas = [];
 // armazenando as empresas adicionadas ao itinerário
 let listaEmpresasItinerario = [];
+// salvando o histórico do itinerario
+let listaEmpresasItinerarioHistorico = [];
 // armazenando as coordenadas das empresas
 let listaEmpresasCoordenadas = [];
 // index da empresa (para mostrar informações)
@@ -88,17 +97,23 @@ fetch(initialUrl, options)
 function checkItinerario() {
     // selecionando o botão de pesquisar
     const pesquisarButton = document.getElementById("pesquisar-button");
+    // botão de mostrar informações da empresa
+    const empresaButton = document.getElementById("empresa-button");
     // se não houver nenhuma empresa no itinerario
     if (listaEmpresasItinerario.length === 0) {
         // desabilitar o botão de pesquisa
         pesquisarButton.disabled = true;
         // a cor de fundo do botão fica cinza
         pesquisarButton.style.backgroundColor = "gray";
+        // removendo o botão de empresa
+        empresaButton.classList.add("d-none");
     } else if (listaEmpresasItinerario.length > 0) {
         // se houver empresa no itinerario, a pesquisa fica habilitada
         pesquisarButton.disabled = false;
         // a cor de fundo do botão fica branca
         pesquisarButton.style.backgroundColor = "white";
+        // adicionando o botão da empresa
+        empresaButton.classList.remove("d-none");
     }
     // selecionando o contador de empresas no itinerario
     const itinerarioCount = document.getElementById("itinerario-count");
@@ -122,6 +137,23 @@ function addToListJourney(empresa) {
     // adicionando a empresa a lista de itinerario
     itinerarioLista.appendChild(itinerarioItem);
 }
+// adicionando empresa ao historico de itinerario
+function addToHistoryJourney(empresa) {
+    // removendo a mensagem de nenhum itinerario
+    defaultItinearioHistorico.innerHTML = "";
+    // adicionando a empresa na lista de itinerario
+    const itinerarioHistoricoLista = document.getElementById("itinerario-historico-lista");
+    // criando um elemento li (item) para adicionar a lista de itinerario
+    const itinerarioItem = document.createElement("li");
+    // o texto de cada item da lista será o nome da empresa
+    itinerarioItem.innerHTML = empresa.Nome;
+    // o id de cada item da lista será o nome da empresa
+    itinerarioItem.id = empresa.Nome;
+    // definindo as cores para o texto
+    itinerarioItem.style.color = "black";
+    // adicionando a empresa a lista de itinerario
+    itinerarioHistoricoLista.appendChild(itinerarioItem);
+}
 // removendo empresa do itinerario
 function removeCompanyFromJourney(empresa) {
     try {
@@ -136,7 +168,6 @@ function removeCompanyFromJourney(empresa) {
     } catch(e) {
         // se a empresa não estiver no itinerario, exibir mensagem de erro
         errorNaoItinerario.showModal();
-        setTimeout(() => errorNaoItinerario.close(), delayTime);
     }
 }
 // salvando os dados das empresas em um array
@@ -167,6 +198,7 @@ function addCompany() {
             // se a empresa for encontrada
             if (empresaEncontrada) {
                 addCompanyToJourney(empresaEncontrada);
+                // checando se há ou não empresas no itinerario
                 checkItinerario();
             } else {
                 // se a empresa não for encontrada
@@ -185,6 +217,7 @@ function addCompany() {
             errorItinerario.showModal();
         } else {
             addCompanyToJourney(empresaEncontrada);
+            // checando se há ou não empresas no itinerario
             checkItinerario();
         }
     }
@@ -204,6 +237,7 @@ function removeCompany() {
             // removendo a empresa do itinerario
             listaEmpresasItinerario = listaEmpresasItinerario.filter(empresa => !empresa.Nome.match(regex));
             removeCompanyFromJourney(empresa);
+            // checando se há ou não empresas no itinerario
             checkItinerario();
         } else {
             // se a empresa não for encontrada
@@ -222,6 +256,7 @@ function removeCompany() {
             const regex = new RegExp(empresaEncontrada.Nome, 'gi');
             listaEmpresasItinerario = listaEmpresasItinerario.filter(empresa => !empresa.Nome.match(regex));
             removeCompanyFromJourney(empresaEncontrada);
+            // checando se há ou não empresas no itinerario
             checkItinerario();
         } else {
             // se a empresa não estiver no itinerario
@@ -279,23 +314,124 @@ function showCompanyInfo(empresa) {
     empresaEndereco.innerHTML = "Endereço: " + empresa.Endereço;
     splitPhoneNumber(empresa.Contato);
 }
-function resetJourneyConfirmation() {
-    apagarItinerario.showModal();
+// https://horadecodar.com.br/como-salvar-arrays-na-localstorage-de-javascript/ 
+function showHistoryJourney() {
+    // obtendo o histórico do localStorage
+    listaEmpresasItinerarioHistorico = JSON.parse(localStorage.getItem("itinerario"));
+    // se o historico estiver vazio, exibir mensagem de historico vazio
+    if (!listaEmpresasItinerarioHistorico || listaEmpresasItinerarioHistorico.length === 0) {
+        // exibindo mensagem de histórico vazio
+        defaultItinearioHistorico.innerHTML = "Nenhum histórico de itinerário disponível.";
+    } else {
+        // selecionando a lista de histórico
+        const itinerarioHistoricoLista = document.getElementById("itinerario-historico-lista");
+        // zerando a lista de histórico
+        itinerarioHistoricoLista.innerHTML = "";
+        // para cada empresa na lista de histórico, adicionar a empresa na lista
+        listaEmpresasItinerarioHistorico.forEach((empresa) => {
+            addToHistoryJourney(empresa);
+        });
+    }
 }
-// resetando as informações da empresa
-function resetJourney(){
+function restoreHistoryJourney() {
+    // se o historico estiver vazio, exibir modal de histórico vazio
+    if (!listaEmpresasItinerarioHistorico || listaEmpresasItinerarioHistorico.length === 0) {
+        vazioHistoricoItinerario.showModal();
+    } else {
+        // se não estiver vazio, a lista de itinerario será a lista de histórico
+        listaEmpresasItinerario = listaEmpresasItinerarioHistorico;
+        // zerando a lista de coordenadas
+        listaEmpresasCoordenadas = [];
+        // selecionando a lista de itinerario
+        const itinerarioLista = document.getElementById("itinerario-lista");
+        // zerando a lista de itinerario
+        itinerarioLista.innerHTML = "";
+        // para cada empresa no itinerario, adicionar a empresa na lista e nas coordenadas
+        listaEmpresasItinerario.forEach((empresa) => {
+            addToListJourney(empresa);
+            listaEmpresasCoordenadas.push({
+                lat: empresa.Latitude,
+                lon: empresa.Longitude,
+            });
+        });
+        // itinerario restaurado com sucesso
+        restaurarItinerario.showModal();
+        // checando se há ou não empresas no itinerario
+        checkItinerario();
+        // realizando a pesquisa (usuário não precisa perder tempo clicando em pesquisar)
+        searchOption();
+    }
+}
+function saveJourney() {
+    // se o itinerario estiver vazio, não salvar no localStorage
+    if (listaEmpresasItinerario.length === 0) {
+        vazioItinerario.showModal();
+    } else {
+        // mensagem de salvo com sucesso
+        salvarItinerario.showModal();
+        // checando se há ou não empresas no itinerario
+        checkItinerario();
+        // se o itinerario não estiver vazio, salvar no localStorage
+        localStorage.setItem("itinerario", JSON.stringify(listaEmpresasItinerario));
+    }
+}
+function resetJourneyConfirmation() {
+    // se o itinerario estiver vazio, exibir modal de itinerario vazio
+    if (listaEmpresasItinerario.length === 0) {
+        vazioItinerario.showModal();
+    } else {
+        // se o itinerario não estiver vazio, exibir modal para apagar o itinerario
+        apagarItinerario.showModal();
+    }
+}
+function resetHistoryJourneyConfirmation() {
+    // se o historico estiver vazio, exibir modal de histórico vazio
+    if (!listaEmpresasItinerarioHistorico || listaEmpresasItinerarioHistorico.length === 0) {
+        vazioHistoricoItinerario.showModal();
+    } else {
+        // se o historico não estiver vazio, exibir modal para apagar histórico
+        apagarHistoricoItinerario.showModal();
+    }
+}
+// resetando (apagando) o itinerario
+function resetJourney() {
+    // a lista de empresas no itinerario fica vazia
     listaEmpresasItinerario = [];
     // removendo as empresas da lista de itinerario
     const itinerarioLista = document.getElementById("itinerario-lista");
+    // a lista fica vazia
     itinerarioLista.innerHTML = "";
+    // exibindo mensagem de nenhum itinerario disponível
     defaultItineario.innerHTML = "Nenhum itinerário disponível.";
+    // fechando o modal de apagar itinerario
     apagarItinerario.close();
-    // removendo o botão de mostrar informações das empresas
-    btnEmpresa.classList.add("d-none");
+    // abrindo o modal de itinerario apagado com sucesso
+    apagarItinerarioSucesso.showModal();
+    // checando se há ou não empresas no itinerario
+    checkItinerario();
+}
+// resetando (apagando) o histórico de itinerario
+function resetHistoryJourney() {
+    // o historico de itinerario fica vazio
+    listaEmpresasItinerarioHistorico = [];
+    // salvando o histórico vazio no localStorage
+    localStorage.setItem("itinerario", JSON.stringify(listaEmpresasItinerarioHistorico));
+    // removendo as empresas da lista de histórico de itinerario
+    const itinerarioHistoricoLista = document.getElementById("itinerario-historico-lista");
+    // a lista de histórico fica vazia
+    itinerarioHistoricoLista.innerHTML = "";
+    // exibindo mensagem de nenhum histórico de itinerario disponível
+    defaultItinearioHistorico.innerHTML = "Nenhum histórico de itinerário disponível.";
+    // fechando o modal de apagar histórico de itinerario
+    apagarHistoricoItinerario.close();
+    // abrindo o modal de histórico itinerario apagado com sucesso
+    apagarHistoricoItinerarioSucesso.showModal();
+    // checando se há ou não empresas no itinerario
     checkItinerario();
 }
 // mostrando as informações da empresa anterior
 function previousCompany() {
+    // se o índice atual é maior que zero, é possível exibir uma empresa anterior
     if (empresaIndex > 0) {
         empresaIndex--;
         showCompanyInfo(listaEmpresasItinerario[empresaIndex]);
@@ -303,21 +439,27 @@ function previousCompany() {
 }
 // mostrando as informações da empresa seguinte
 function nextCompany() {
+    // se o índice atual é menor que o comprimento da lista, é possível exibir uma empresa posterior
     if (empresaIndex < listaEmpresasItinerario.length - 1) {
         empresaIndex++;
         showCompanyInfo(listaEmpresasItinerario[empresaIndex]);
     }
 }
+// mostrando as informações da empresa
+function showDefaultCompanyInfo() {
+    showCompanyInfo(listaEmpresasItinerario[0]);
+}
 // realizando a pesquisa
 function searchOption() {
-    // mostrando informações das empresas
-    btnEmpresa.classList.remove("d-none");
     const select = document.getElementById("empresas");
     // se não houver nenhuma empresa no select === api offline
     if (select.options.length === 0) {
+        // abrindo modal de api offline
         offline.showModal();
     } else {
-        showCompanyInfo(listaEmpresasItinerario[0]);
+        // se a api estiver online, exibir a primeira empresa no itinerario
+        showDefaultCompanyInfo();
+        // realizar a consulta da rota no mapa
         createUrlMap(listaEmpresasCoordenadas);
     }
 }
@@ -345,15 +487,36 @@ function closeWarning(){
 function closeError(){
     error.close();
 }
+function closeVazioItinerario() {
+    vazioItinerario.close();
+}
+function closeVazioHistoricoItinerario() {
+    vazioHistoricoItinerario.close();
+}
+function closeRestaurarItinerario() {
+    restaurarItinerario.close();
+}
+function closeSalvarItinerario() {
+    salvarItinerario.close();
+}
 function closeApagarItinerario() {
     apagarItinerario.close();
 }
-function closeErrorItinerario(){
+function closeApagarItinerarioSucesso() {
+    apagarItinerarioSucesso.close();
+}
+function closeApagarHistoricoItinerario() {
+    apagarHistoricoItinerario.close();
+}
+function closeApagarHistoricoItinerarioSucesso() {
+    apagarHistoricoItinerarioSucesso.close();
+}
+function closeErrorItinerario() {
     errorItinerario.close();
 }
-function closeErrorNaoItinerario(){
+function closeErrorNaoItinerario() {
     errorNaoItinerario.close();
 }
-function closeOffline(){
+function closeOffline() {
     offline.close();
 }
