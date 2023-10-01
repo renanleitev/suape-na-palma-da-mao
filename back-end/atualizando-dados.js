@@ -1,13 +1,13 @@
 const empresa = {
-    id: 11,
-    Nome: "BRASALPLA",
-    Atividade: "Fabricação de embalagens plásticas",
-    Município: "Cabo de Santo Agostinho",
-    Polo: "Preforma PET e Plástico",
-    Endereço: "Rodovia PE-60, 3º acesso, nº 5023, Cabo de Santo Agostinho. CEP: 54.510-000",
-    Contato: "+55 81 2137-4900",
-    Latitude: '-8.337301404644725',
-    Longitude: '-35.02893228036875'
+    id: 31,
+    Nome: 'FLEX EMBALAGENS PLÁSTICAS',
+    Atividade: 'Embalagens Plásticas',
+    Município: 'Cabo de Santo Agostinho',
+    Polo: 'Preforma PET e Plástico',
+    Endereço: 'Rodovia PE-60, nº 6202, Cabo de Santo Agostinho, PE',
+    Contato: '+55 81 3064-089',
+    Latitude: '-8.32733785287399',
+    Longitude: '-35.00830555338384'
 };
 
 const id = empresa.id;

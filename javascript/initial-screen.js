@@ -154,8 +154,8 @@ function addToHistoryJourney(empresa) {
 function removeCompanyFromJourney() {
     try {
         // removendo a última empresa do itinerario e das coordenadas
-        listaEmpresasItinerario.pop();
-        listaEmpresasCoordenadas.pop();
+        listaEmpresasItinerario.splice(-1);
+        listaEmpresasCoordenadas.splice(-1);
         // se o itinerario estiver vazio, exibir mensagem
         if (listaEmpresasItinerario.length === 0) {
             defaultItinerario.innerHTML = "Nenhum itinerário disponível.";
