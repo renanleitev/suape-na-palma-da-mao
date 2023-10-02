@@ -83,24 +83,14 @@ function firstLoad() {
         searchEmpresas();
     }
 }
-// fazendo a requisição GET (pontos)
-function searchPontos() {
+function getEmpresaOuPonto(url) {
     // mostrando tela de loading
     loading.showModal();
-    // mudando a cor da aba
-    const pontosTab = document.getElementById("pontos-tab");
-    pontosTab.classList.add("active");
-    pontosTab.classList.remove("text-white");
-    const empresasTab = document.getElementById("empresas-tab");
-    empresasTab.classList.remove("active");
-    empresasTab.classList.add("text-white");
-    // obtendo os dados dos pontos
-    const pontosUrl = `${baseUrl}/ponto/`;
     // selecionado o elemento select
     const select = document.getElementById("empresas");
     // limpando o select
     select.innerHTML = "";
-    fetch(pontosUrl, options)
+    fetch(url, options)
         .then((resposta) => resposta.json())
         .then(data => {
             // ordenando os dados em ordem alfabetica e salvando em um array
@@ -121,14 +111,26 @@ function searchPontos() {
             });
         })
         .catch((e) => setTimeout(() => loading.close(), delayTime));
+}
+// fazendo a requisição GET (pontos)
+function searchPontos() {
+    // mudando a cor da aba
+    const pontosTab = document.getElementById("pontos-tab");
+    pontosTab.classList.add("active");
+    pontosTab.classList.remove("text-white");
+    const empresasTab = document.getElementById("empresas-tab");
+    empresasTab.classList.remove("active");
+    empresasTab.classList.add("text-white");
+    // obtendo os dados dos pontos
+    const pontosUrl = `${baseUrl}/ponto/`;
+    // fazendo a consulta na api
+    getEmpresaOuPonto(pontosUrl);
     // obtendo os valores do input de pesquisar
     const pesquisar = document.getElementById('pesquisar');
     pesquisar.placeholder = "Pontos de interesse...";
 }
 // fazendo a requisição GET (empresas)
 function searchEmpresas() {
-    // mostrando tela de loading
-    loading.showModal();
     // mudando a cor da aba
     const empresasTab = document.getElementById("empresas-tab");
     empresasTab.classList.add("active");
@@ -138,33 +140,8 @@ function searchEmpresas() {
     pontosTab.classList.add("text-white");
     // obtendo os dados das empresas
     const empresasUrl = `${baseUrl}/empresa/`;
-    // selecionado o elemento select
-    const select = document.getElementById("empresas");
-    // limpando o select
-    select.innerHTML = "";
-    fetch(empresasUrl, options)
-        .then((resposta) => resposta.json())
-        .then(data => {
-            // ordenando os dados em ordem alfabetica e salvando em um array
-            // https://stackoverflow.com/questions/6712034/sort-array-by-firstname-alphabetically-in-javascript
-            listaEmpresas = data.sort((a, b) => a.Nome.localeCompare(b.Nome))
-            // adicionando as empresas na lista de opções
-            listaEmpresas.forEach(empresa => {
-                // criando um elemento do tipo option
-                const option = document.createElement("option");
-                // o texto de cada option será o nome da empresa
-                option.text = empresa.Nome;
-                // o valor de cada option será a latitude e a longitude
-                option.value = `${empresa.Latitude},${empresa.Longitude}`;
-                // selecionado o elemento select
-                const select = document.getElementById("empresas");
-                // adicionando cada option no select
-                select.appendChild(option);
-                // fechando o loading
-                loading.close();
-            })
-        })        
-        .catch((e) => setTimeout(() => loading.close(), delayTime));
+    // fazendo a consulta na api
+    getEmpresaOuPonto(empresasUrl);
     // obtendo os valores do input de pesquisar
     const pesquisar = document.getElementById('pesquisar');
     pesquisar.placeholder = "Empresas...";
