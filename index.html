@@ -150,7 +150,7 @@
                             <path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"/>
                           </svg>
                     </button>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body itinerario-body">
                     <p class="text-dark" id="default-itinerario">Nenhum itinerário disponível.</p>
@@ -183,7 +183,7 @@
                             <path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"/>
                           </svg>
                     </button>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body itinerario-body">
                     <p class="text-dark" id="default-itinerario-historico">Nenhum histórico de itinerário disponível.</p>
@@ -232,65 +232,119 @@
     </dialog>
     <!-- Error screen -->
     <dialog onclick="dialogClickHandler(event)" class="dialog-container" id="error">
-        <div class="alert alert-danger modal-header m-0" role="alert">
-            Consulta inválida.
-            <button type="button" class="btn-close" onclick="closeError()" aria-label="Close"></button>
+        <div class="alert alert-danger m-0" role="alert">
+            <div class="modal-container">
+                <div class="modal-header border-0 p-2">
+                    <button type="button" class="btn-close shadow-none" onclick="closeError()" aria-label="Close"></button>
+                </div>
+                <p class="text-dark">
+                    Consulta inválida.
+                </p>
+            </div>
         </div>
     </dialog>
     <!-- Itinerario vazio screen -->
     <dialog onclick="dialogClickHandler(event)" class="dialog-container" id="vazio-itinerario">
-        <div class="alert alert-danger modal-header m-0" role="alert">
-            Itinerário está vazio.
-            <button type="button" class="btn-close" onclick="closeVazioItinerario()" aria-label="Close"></button>
+        <div class="alert alert-danger m-0" role="alert">
+            <div class="modal-container">
+                <div class="modal-header border-0 p-2">
+                    <button type="button" class="btn-close shadow-none" onclick="closeVazioItinerario()" aria-label="Close"></button>
+                </div>
+                <p class="text-dark">
+                    Itinerário está vazio.
+                </p>
+            </div>
         </div>
     </dialog>
     <!-- Itinerario vazio screen -->
     <dialog onclick="dialogClickHandler(event)" class="dialog-container" id="vazio-itinerario-pesquisa">
-        <div class="alert alert-warning modal-header m-0" role="alert">
-            Itinerário está vazio. Por favor, adicione uma empresa para pesquisar!
-            <button type="button" class="btn-close" onclick="closeVazioItinerarioPesquisa()" aria-label="Close"></button>
+        <div class="alert alert-warning m-0" role="alert">
+            <div class="modal-container">
+                <div class="modal-header border-0 p-2">
+                    <button type="button" class="btn-close shadow-none" onclick="closeVazioItinerarioPesquisa()" aria-label="Close"></button>
+                </div>
+                <p class="text-dark">
+                    Itinerário está vazio. Por favor, adicione uma empresa para pesquisar!
+                </p>
+            </div>
         </div>
     </dialog>
     <!-- Histórico itinerario vazio screen -->
     <dialog onclick="dialogClickHandler(event)" class="dialog-container" id="vazio-historico-itinerario">
-        <div class="alert alert-danger modal-header m-0" role="alert">
-            Histórico de itinerário está vazio.
-            <button type="button" class="btn-close" onclick="closeVazioHistoricoItinerario()" aria-label="Close"></button>
+        <div class="alert alert-danger m-0" role="alert">
+            <div class="modal-container">
+                <div class="modal-header border-0 p-2">    
+                    <button type="button" class="btn-close shadow-none" onclick="closeVazioHistoricoItinerario()" aria-label="Close"></button>
+                </div>
+                <p class="text-dark">
+                    Histórico de itinerário está vazio.
+                </p>
+            </div>
         </div>
     </dialog>
     <!-- Itinerario salvo screen -->
     <dialog onclick="dialogClickHandler(event)" class="dialog-container" id="salvar-itinerario">
-        <div class="alert alert-success modal-header m-0" role="alert">
-            Itinerário salvo.
-            <button type="button" class="btn-close" onclick="closeSalvarItinerario()" aria-label="Close"></button>
+        <div class="alert alert-success m-0" role="alert">
+            <div class="modal-container">
+                <div class="modal-header border-0 p-2">
+                    <button type="button" class="btn-close shadow-none" onclick="closeSalvarItinerario()" aria-label="Close"></button>
+                </div>
+                <p class="text-dark">
+                    Itinerário salvo.
+                </p>
+            </div>
         </div>
     </dialog>
     <!-- Itinerario restaurado com sucesso screen -->
     <dialog onclick="dialogClickHandler(event)" class="dialog-container" id="restaurar-itinerario">
-        <div class="alert alert-success modal-header m-0" role="alert">
-            Itinerário restaurado com sucesso.
-            <button type="button" class="btn-close" onclick="closeRestaurarItinerario()" aria-label="Close"></button>
+        <div class="alert alert-success m-0" role="alert">
+            <div class="modal-container">
+                <div class="modal-header border-0 p-2">
+                    <button type="button" class="btn-close shadow-none" onclick="closeRestaurarItinerario()" aria-label="Close"></button>
+                </div>
+                <p class="text-dark">
+                    Itinerário restaurado com sucesso.
+                </p>
+            </div>
         </div>
     </dialog>
     <!-- Itinerario apagado com sucesso screen -->
     <dialog onclick="dialogClickHandler(event)" class="dialog-container" id="apagar-itinerario-sucesso">
-        <div class="alert alert-success modal-header m-0" role="alert">
-            Itinerário apagado com sucesso.
-            <button type="button" class="btn-close" onclick="closeApagarItinerarioSucesso()" aria-label="Close"></button>
+        <div class="alert alert-success m-0" role="alert">
+            <div class="modal-container">
+                <div class="modal-header border-0 p-2">
+                    <button type="button" class="btn-close shadow-none" onclick="closeApagarItinerarioSucesso()" aria-label="Close"></button>
+                </div>
+                <p class="text-dark">
+                    Itinerário apagado com sucesso.
+                </p>
+            </div>
         </div>
     </dialog>
     <!-- Histórico de itinerario apagado com sucesso screen -->
     <dialog onclick="dialogClickHandler(event)" class="dialog-container" id="apagar-historico-itinerario-sucesso">
-        <div class="alert alert-success modal-header m-0" role="alert">
-            Histórico de itinerário apagado com sucesso.
-            <button type="button" class="btn-close" onclick="closeApagarHistoricoItinerarioSucesso()" aria-label="Close"></button>
+        <div class="alert alert-success m-0" role="alert">
+            <div class="modal-container">
+                <div class="modal-header border-0 p-2">
+                    <button type="button" class="btn-close shadow-none" onclick="closeApagarHistoricoItinerarioSucesso()" aria-label="Close"></button>
+                </div>
+                <p class="text-dark">
+                    Histórico de itinerário apagado com sucesso.
+                </p>
+            </div>
         </div>
     </dialog>
     <!-- Offline screen -->
     <dialog onclick="dialogClickHandler(event)" class="dialog-container" id="offline">
-        <div class="alert alert-danger modal-header m-0" role="alert">
-            Sem conexão com o servidor.
-            <button type="button" class="btn-close" onclick="closeOffline()" aria-label="Close"></button>
+        <div class="alert alert-danger m-0" role="alert">
+            <div class="modal-container">
+                <div class="modal-header border-0 p-2">
+                    <button type="button" class="btn-close shadow-none" onclick="closeOffline()" aria-label="Close"></button>
+                </div>
+                <p class="text-dark">
+                    Sem conexão com o servidor.
+                </p>
+            </div>
         </div>
     </dialog>
     <!-- Apagar itinerario warning screen -->

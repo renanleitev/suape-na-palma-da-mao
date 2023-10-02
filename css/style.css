@@ -174,7 +174,6 @@ iframe {
 /* Botão de adicionar do itinerário */
 .adicionar-button{
     border-radius: 20px;
-    /* padding: 10px; */
     border: none;
     margin-right: 5px;
 }
@@ -182,7 +181,6 @@ iframe {
 /* Botão de remover do itinerário */
 .remover-button{
     border-radius: 20px;
-    /* padding: 10px; */
     border: none;
     margin-right: 5px;
 }
