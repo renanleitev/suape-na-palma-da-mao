@@ -6,6 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="./css//bootstrap.min.css">
+    <!-- PWA Support -->
+    <link rel="canonical" href="https://renanleitev.github.io/suape-na-palma-da-mao/" />
+    <link rel="manifest" href="/suape-na-palma-da-mao/manifest.json">
+    <meta name="theme-color" content="#0c5445" />
     <title>Suape na Palma da Mão</title>
 </head>
 
@@ -386,5 +390,13 @@
 </body>
 <script src="./javascript/initial-screen.js"></script>
 <script src="./javascript/bootstrap.bundle.min.js"></script>
-
+<!-- PWA Support -->
+<script>
+    if (navigator.serviceWorker) {
+        navigator.serviceWorker.register(
+            '/suape-na-palma-da-mao/sw.js',
+            { scope: '/suape-na-palma-da-mao/' }
+        )
+    }
+</script>
 </html>

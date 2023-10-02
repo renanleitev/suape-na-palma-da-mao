@@ -5,39 +5,38 @@
     "start_url": "/suape-na-palma-da-mao/",
     "display": "standalone",
     "background_color": "#fdfdfd",
-    "theme_color": "#003f7b",
+    "theme_color": "#0c5445",
     "orientation": "portrait-primary",
     "icons": [
         {
-            "src": "/atividade-01-senac/icons/72.png",
+            "src": "/suape-na-palma-da-mao/icons/48.png",
+            "type": "image/png",
+            "sizes": "48x48"
+        },
+        {
+            "src": "/suape-na-palma-da-mao/icons/72.png",
             "type": "image/png",
             "sizes": "72x72"
         },
         {
-            "src": "/atividade-01-senac/icons/128.png",
+            "src": "/suape-na-palma-da-mao/icons/96.png",
             "type": "image/png",
-            "sizes": "128x128"
+            "sizes": "96x96"
         },
         {
-            "src": "/atividade-01-senac/icons/144.png",
+            "src": "/suape-na-palma-da-mao/icons/144.png",
             "type": "image/png",
             "sizes": "144x144"
         },
         {
-            "src": "/atividade-01-senac/icons/256.png",
+            "src": "/suape-na-palma-da-mao/icons/192.png",
             "type": "image/png",
-            "sizes": "256x256"
+            "sizes": "192x192"
         },
         {
-            "src": "/atividade-01-senac/icons/512.png",
+            "src": "/suape-na-palma-da-mao/icons/512.png",
             "type": "image/png",
             "sizes": "512x512"
-        },
-        {
-            "src": "/atividade-01-senac/icons/1024.png",
-            "type": "image/png",
-            "sizes": "1024x1024",
-            "purpose": "any maskable"
         }
     ]
 }
