@@ -1,28 +1,28 @@
-const empresa = {
-    id: 31,
-    Nome: 'FLEX EMBALAGENS PLÁSTICAS',
-    Atividade: 'Embalagens Plásticas',
-    Município: 'Cabo de Santo Agostinho',
-    Polo: 'Preforma PET e Plástico',
-    Endereço: 'Rodovia PE-60, nº 6202, Cabo de Santo Agostinho, PE',
-    Contato: '+55 81 3064-089',
-    Latitude: '-8.32733785287399',
-    Longitude: '-35.00830555338384'
-};
+// const empresa = {
+//     id: 84,
+//     Nome: 'ZIRAN NORDESTE',
+//     Atividade: 'Transporte Rodoviário de Cargas e DEPOT',
+//     Município: 'Ipojuca',
+//     Polo: 'Logística',
+//     Endereço: 'Rodovia PE-60, km 10, Ipojuca, PE',
+//     Contato: '+55 (81) 3079-8966',
+//     Latitude: '-8.396078643478678',
+//     Longitude: '-35.02193239645103'
+// };
 
-const id = empresa.id;
+// const id = empresa.id;
 
-const url = `https://api-suape.onrender.com/empresa/${id}`;
+// const url = `https://api-suape.onrender.com/empresa/${id}`;
 
-fetch(
-    url,
-    {
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        method: "PATCH",
-        body: JSON.stringify(empresa)
-    })
-    .then(function(){ console.log("atualização bem-sucedida") })
-    .catch(function(res){ console.log("deu erro", res) })
+// fetch(
+//     url,
+//     {
+//         headers: {
+//             'Accept': 'application/json',
+//             'Content-Type': 'application/json'
+//         },
+//         method: "PATCH",
+//         body: JSON.stringify(empresa)
+//     })
+//     .then(function(){ console.log("atualização bem-sucedida") })
+//     .catch(function(res){ console.log("deu erro", res) })

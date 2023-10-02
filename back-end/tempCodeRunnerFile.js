@@ -1,7 +1,0 @@
-    id: 26,
-    Nome: 'E-LOG PÁTIO DE TRIAGEM',
-    Atividade: 'Serviço de triagem de caminhões para acesso ao Porto de Suape',
-    Município: 'Cabo de Santo Agostinho',
-    Polo: 'Central de Serviços',
-    Endereço: 'Avenida TDR Norte, nº8466, 54500-000 Cabo de Santo Agostinho, PE',
-    Contato: '+55 81 3561-3150',
