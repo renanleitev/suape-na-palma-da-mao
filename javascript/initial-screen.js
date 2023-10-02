@@ -33,7 +33,7 @@ let listaEmpresas = [];
 // armazenando as empresas adicionadas ao itinerário
 let listaEmpresasItinerario = [];
 // salvando o histórico do itinerario (se não houver, o histórico fica vazio)
-let listaEmpresasItinerarioHistorico =  JSON.parse(localStorage.getItem("itinerario")) || [];
+let listaEmpresasItinerarioHistorico = JSON.parse(localStorage.getItem("itinerario")) || [];
 // armazenando as coordenadas das empresas
 let listaEmpresasCoordenadas = [];
 // index da empresa (para mostrar informações)
@@ -62,8 +62,6 @@ function getPositionError() {
     iframe.src = `https://maps.google.com/maps?q=${latitude},${longitude}&z=15&output=embed`;
 }
 navigator.geolocation.getCurrentPosition(getPositionSuccess, getPositionError);
-// obtendo os dados das empresas
-const initialUrl = `${baseUrl}/empresa/`;
 // parametros para a requisição GET
 const options =
 {
@@ -75,27 +73,102 @@ const options =
 };
 // checando se há ou não empresas no itinerario
 checkItinerario();
-// fazendo a requisição GET
-fetch(initialUrl, options)
-    .then((resposta) => resposta.json())
-    .then(data => {
-        // ordenando os dados em ordem alfabetica e salvando em um array
-        // https://stackoverflow.com/questions/6712034/sort-array-by-firstname-alphabetically-in-javascript
-        listaEmpresas = data.sort((a, b) => a.Nome.localeCompare(b.Nome))
-        // adicionando as empresas na lista de opções
-        listaEmpresas.forEach(empresa => {
-            // criando um elemento do tipo option
-            const option = document.createElement("option");
-            // o texto de cada option será o nome da empresa
-            option.text = empresa.Nome;
-            // o valor de cada option será a latitude e a longitude
-            option.value = `${empresa.Latitude},${empresa.Longitude}`;
-            // selecionado o elemento select
-            const select = document.getElementById("empresas");
-            // adicionando cada option no select
-            select.appendChild(option);
-        });
-    });
+// no primeiro load
+firstLoad();
+function firstLoad() {
+    const select = document.getElementById("empresas");
+    // se não houver nenhuma empresa no select === primeiro load
+    if (select.options.length === 0) {
+        // abrindo modal de api offline
+        searchEmpresas();
+    }
+}
+// fazendo a requisição GET (pontos)
+function searchPontos() {
+    // mostrando tela de loading
+    loading.showModal();
+    // mudando a cor da aba
+    const pontosTab = document.getElementById("pontos-tab");
+    pontosTab.classList.add("active");
+    pontosTab.classList.remove("text-white");
+    const empresasTab = document.getElementById("empresas-tab");
+    empresasTab.classList.remove("active");
+    empresasTab.classList.add("text-white");
+    // obtendo os dados dos pontos
+    const pontosUrl = `${baseUrl}/ponto/`;
+    // selecionado o elemento select
+    const select = document.getElementById("empresas");
+    // limpando o select
+    select.innerHTML = "";
+    fetch(pontosUrl, options)
+        .then((resposta) => resposta.json())
+        .then(data => {
+            // ordenando os dados em ordem alfabetica e salvando em um array
+            // https://stackoverflow.com/questions/6712034/sort-array-by-firstname-alphabetically-in-javascript
+            listaEmpresas = data.sort((a, b) => a.Nome.localeCompare(b.Nome))
+            // adicionando as empresas na lista de opções
+            listaEmpresas.forEach(empresa => {
+                // criando um elemento do tipo option
+                const option = document.createElement("option");
+                // o texto de cada option será o nome da empresa
+                option.text = empresa.Nome;
+                // o valor de cada option será a latitude e a longitude
+                option.value = `${empresa.Latitude},${empresa.Longitude}`;
+                // adicionando cada option no select
+                select.appendChild(option);
+                // fechando o loading
+                loading.close();
+            });
+        })
+        .catch((e) => setTimeout(() => loading.close(), delayTime));
+    // obtendo os valores do input de pesquisar
+    const pesquisar = document.getElementById('pesquisar');
+    pesquisar.placeholder = "Pontos de interesse...";
+}
+// fazendo a requisição GET (empresas)
+function searchEmpresas() {
+    // mostrando tela de loading
+    loading.showModal();
+    // mudando a cor da aba
+    const empresasTab = document.getElementById("empresas-tab");
+    empresasTab.classList.add("active");
+    empresasTab.classList.remove("text-white");
+    const pontosTab = document.getElementById("pontos-tab");
+    pontosTab.classList.remove("active");
+    pontosTab.classList.add("text-white");
+    // obtendo os dados das empresas
+    const empresasUrl = `${baseUrl}/empresa/`;
+    // selecionado o elemento select
+    const select = document.getElementById("empresas");
+    // limpando o select
+    select.innerHTML = "";
+    fetch(empresasUrl, options)
+        .then((resposta) => resposta.json())
+        .then(data => {
+            // ordenando os dados em ordem alfabetica e salvando em um array
+            // https://stackoverflow.com/questions/6712034/sort-array-by-firstname-alphabetically-in-javascript
+            listaEmpresas = data.sort((a, b) => a.Nome.localeCompare(b.Nome))
+            // adicionando as empresas na lista de opções
+            listaEmpresas.forEach(empresa => {
+                // criando um elemento do tipo option
+                const option = document.createElement("option");
+                // o texto de cada option será o nome da empresa
+                option.text = empresa.Nome;
+                // o valor de cada option será a latitude e a longitude
+                option.value = `${empresa.Latitude},${empresa.Longitude}`;
+                // selecionado o elemento select
+                const select = document.getElementById("empresas");
+                // adicionando cada option no select
+                select.appendChild(option);
+                // fechando o loading
+                loading.close();
+            })
+        })        
+        .catch((e) => setTimeout(() => loading.close(), delayTime));
+    // obtendo os valores do input de pesquisar
+    const pesquisar = document.getElementById('pesquisar');
+    pesquisar.placeholder = "Empresas...";
+}
 // checando se o input e o select foram modificados
 function inputChanged() {
     pesquisandoInput = true;
@@ -169,9 +242,9 @@ function removeCompanyFromJourney() {
         itinerarioLista.removeChild(itinerarioLista.lastChild);
         // checando se há ou não empresas no itinerario
         checkItinerario();
-    } catch(e) {
+    } catch (e) {
         // se a empresa não estiver no itinerario, exibir mensagem de erro
-       console.log(e);
+        console.log(e);
     }
 }
 // salvando os dados das empresas em um array
@@ -190,7 +263,7 @@ function addCompany() {
     const pesquisar = document.getElementById('pesquisar');
     const consulta = pesquisar.value;
     // se o input não estiver vazio
-    if (pesquisandoInput){
+    if (pesquisandoInput) {
         // procurando a empresa
         const regex = new RegExp(consulta, 'gi');
         const empresaEncontrada = listaEmpresas.find(empresa => empresa.Nome.match(regex));
@@ -249,7 +322,7 @@ function invertJourney() {
 }
 // invertendo o historico do itinerario
 function invertHistoryJourney() {
-    if (listaEmpresasItinerarioHistorico.length === 0){
+    if (listaEmpresasItinerarioHistorico.length === 0) {
         // se o histórico de itinerario estiver vazio, exibir mensagem de histórico vazio
         defaultItinerarioHistorico.innerHTML = "Nenhum histórico de itinerário disponível.";
     } else {
@@ -291,7 +364,7 @@ function createUrlMap(coordenadas) {
     iframe.src = urlConstruct;
 }
 // exibindo informações da empresa selecionada
-function splitPhoneNumber(contato){
+function splitPhoneNumber(contato) {
     // zerando os números de telefone, quando trocar de empresa
     empresaContato.innerHTML = "";
     // separando os números de telefone, se houver mais de um
@@ -481,7 +554,7 @@ function dialogClickHandler(e) {
     if (e.target.tagName !== 'DIALOG') {
         //This prevents issues with forms
         return;
-    } 
+    }
     const rect = e.target.getBoundingClientRect();
     const clickedInDialog = (
         rect.top <= e.clientY &&
@@ -493,10 +566,10 @@ function dialogClickHandler(e) {
         e.target.close();
     }
 }
-function closeWarning(){
+function closeWarning() {
     warning.close();
 }
-function closeError(){
+function closeError() {
     error.close();
 }
 function closeVazioItinerario() {

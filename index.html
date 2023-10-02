@@ -97,9 +97,17 @@
     <div class="offcanvas offcanvas-bottom h-auto" tabindex="-1" id="offcanvasBottom"
         aria-labelledby="offcanvasBottomLabel">
         <div class="d-flex flex-column justify-content-center align-items-center">
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                  <a class="nav-link active rounded-0" onclick="searchEmpresas()" id="empresas-tab" aria-current="page" href="#">Empresas</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link text-white rounded-0" onclick="searchPontos()" id="pontos-tab" href="#">Pontos de Interesse</a>
+                </li>
+              </ul>
             <div class="pesquisar-container">
                 <!-- Input de pesquisa -->
-                <input onchange="inputChanged()" type="text" class="pesquisar-input" id="pesquisar" placeholder="Pesquisar empresas...">
+                <input onchange="inputChanged()" type="text" class="pesquisar-input" id="pesquisar" placeholder="Empresas...">
                 <!-- Input de select -->
                 <select onchange="selectChanged()" name="" class="empresas-select" id="empresas">
                 </select>
