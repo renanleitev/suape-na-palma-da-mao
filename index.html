@@ -244,6 +244,13 @@
             <button type="button" class="btn-close" onclick="closeVazioItinerario()" aria-label="Close"></button>
         </div>
     </dialog>
+    <!-- Itinerario vazio screen -->
+    <dialog onclick="dialogClickHandler(event)" class="dialog-container" id="vazio-itinerario-pesquisa">
+        <div class="alert alert-warning modal-header m-0" role="alert">
+            Itinerário está vazio. Por favor, adicione uma empresa para pesquisar!
+            <button type="button" class="btn-close" onclick="closeVazioItinerarioPesquisa()" aria-label="Close"></button>
+        </div>
+    </dialog>
     <!-- Histórico itinerario vazio screen -->
     <dialog onclick="dialogClickHandler(event)" class="dialog-container" id="vazio-historico-itinerario">
         <div class="alert alert-danger modal-header m-0" role="alert">

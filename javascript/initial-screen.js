@@ -15,6 +15,7 @@ const offline = document.getElementById("offline");
 const salvarItinerario = document.getElementById("salvar-itinerario");
 const restaurarItinerario = document.getElementById("restaurar-itinerario");
 const vazioItinerario = document.getElementById("vazio-itinerario");
+const vazioItinerarioPesquisa = document.getElementById("vazio-itinerario-pesquisa");
 const vazioHistoricoItinerario = document.getElementById("vazio-historico-itinerario");
 // mensagem padrão do itinerario
 const defaultItinerario = document.getElementById("default-itinerario");
@@ -93,23 +94,13 @@ fetch(initialUrl, options)
     });
 // checando se há empresas no itinerario
 function checkItinerario() {
-    // selecionando o botão de pesquisar
-    const pesquisarButton = document.getElementById("pesquisar-button");
     // botão de mostrar informações da empresa
     const empresaButton = document.getElementById("empresa-button");
     // se não houver nenhuma empresa no itinerario
     if (listaEmpresasItinerario.length === 0) {
-        // desabilitar o botão de pesquisa
-        pesquisarButton.disabled = true;
-        // a cor de fundo do botão fica cinza
-        pesquisarButton.style.backgroundColor = "gray";
         // removendo o botão de empresa
         empresaButton.classList.add("d-none");
     } else if (listaEmpresasItinerario.length > 0) {
-        // se houver empresa no itinerario, a pesquisa fica habilitada
-        pesquisarButton.disabled = false;
-        // a cor de fundo do botão fica branca
-        pesquisarButton.style.backgroundColor = "white";
         // adicionando o botão da empresa
         empresaButton.classList.remove("d-none");
     }
@@ -357,10 +348,10 @@ function restoreHistoryJourney() {
         });
         // itinerario restaurado com sucesso
         restaurarItinerario.showModal();
-        // checando se há ou não empresas no itinerario
-        checkItinerario();
         // realizando a pesquisa (usuário não precisa perder tempo clicando em pesquisar)
-        searchOption();
+        createUrlMap(listaEmpresasCoordenadas);
+        // checando se há empresas ou não no itinerário
+        checkItinerario();
     }
 }
 function saveJourney() {
@@ -398,6 +389,8 @@ function resetHistoryJourneyConfirmation() {
 function resetJourney() {
     // a lista de empresas no itinerario fica vazia
     listaEmpresasItinerario = [];
+    // a lista de coordenadas fica vazia
+    listaEmpresasCoordenadas = [];
     // removendo as empresas da lista de itinerario
     const itinerarioLista = document.getElementById("itinerario-lista");
     // a lista fica vazia
@@ -458,10 +451,15 @@ function searchOption() {
         // abrindo modal de api offline
         offline.showModal();
     } else {
-        // se a api estiver online, exibir a primeira empresa no itinerario
-        showDefaultCompanyInfo();
-        // realizar a consulta da rota no mapa
-        createUrlMap(listaEmpresasCoordenadas);
+        // se o itinerário estiver vazio, avisar o usuário
+        if (listaEmpresasItinerario.length === 0) {
+            vazioItinerarioPesquisa.showModal();
+        } else {
+            // exibir a primeira empresa no itinerario
+            showDefaultCompanyInfo();
+            // realizar a consulta da rota no mapa
+            createUrlMap(listaEmpresasCoordenadas);
+        }
     }
 }
 // fechando os dialogs
@@ -490,6 +488,9 @@ function closeError(){
 }
 function closeVazioItinerario() {
     vazioItinerario.close();
+}
+function closeVazioItinerarioPesquisa() {
+    vazioItinerarioPesquisa.close();
 }
 function closeVazioHistoricoItinerario() {
     vazioHistoricoItinerario.close();
