@@ -93,9 +93,9 @@
         <div class="d-flex flex-column justify-content-center align-items-center">
             <div class="pesquisar-container">
                 <!-- Input de pesquisa -->
-                <input type="text" class="pesquisar-input" id="pesquisar" placeholder="Pesquisar empresas...">
+                <input onchange="inputChanged()" type="text" class="pesquisar-input" id="pesquisar" placeholder="Pesquisar empresas...">
                 <!-- Input de select -->
-                <select name="" class="empresas-select" id="empresas">
+                <select onchange="selectChanged()" name="" class="empresas-select" id="empresas">
                 </select>
                 <div class="d-flex justify-content-center">
                     <!-- Botão de adicionar ao itinerário -->

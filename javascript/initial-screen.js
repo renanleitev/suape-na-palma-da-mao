@@ -38,6 +38,10 @@ let listaEmpresasItinerarioHistorico =  JSON.parse(localStorage.getItem("itinera
 let listaEmpresasCoordenadas = [];
 // index da empresa (para mostrar informações)
 let empresaIndex = 0;
+// checando se o usuário está pesquisando pelo input ou pelo select
+let pesquisandoInput = false;
+// por padrão, ele pesquisa pelo select
+let pesquisandoSelect = true;
 // definindo a url base
 // se estiver usando localmente (comentar/descomentar a linha abaixo)
 // const baseUrl = "http://localhost:3000";
@@ -92,6 +96,15 @@ fetch(initialUrl, options)
             select.appendChild(option);
         });
     });
+// checando se o input e o select foram modificados
+function inputChanged() {
+    pesquisandoInput = true;
+    pesquisandoSelect = false;
+}
+function selectChanged() {
+    pesquisandoInput = false;
+    pesquisandoSelect = true;
+}
 // checando se há empresas no itinerario
 function checkItinerario() {
     // botão de mostrar informações da empresa
@@ -177,7 +190,7 @@ function addCompany() {
     const pesquisar = document.getElementById('pesquisar');
     const consulta = pesquisar.value;
     // se o input não estiver vazio
-    if (consulta !== ''){
+    if (pesquisandoInput){
         // procurando a empresa
         const regex = new RegExp(consulta, 'gi');
         const empresaEncontrada = listaEmpresas.find(empresa => empresa.Nome.match(regex));
@@ -190,7 +203,7 @@ function addCompany() {
             // se a empresa não for encontrada
             error.showModal();
         }
-    } else {
+    } else if (pesquisandoSelect) {
         // se o input estiver vazio, obter os valores pelo select
         const empresasSelect = document.getElementById("empresas");
         // obtendo o nome da empresa
