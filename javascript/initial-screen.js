@@ -130,6 +130,8 @@ function searchPontos() {
     const pesquisar = document.getElementById('pesquisar');
     // trocando o placeholder por "Pontos de interesse..."
     pesquisar.placeholder = "Pontos de interesse...";
+    // zerando o valor do input
+    pesquisar.value = "";
 }
 // fazendo a requisição GET (empresas)
 function searchEmpresas() {
@@ -148,6 +150,8 @@ function searchEmpresas() {
     const pesquisar = document.getElementById('pesquisar');
     // trocando o placeholder por "Empresas..."
     pesquisar.placeholder = "Empresas...";
+    // zerando o valor do input
+    pesquisar.value = "";
 }
 // checando se o input e o select foram modificados
 function inputChanged() {
