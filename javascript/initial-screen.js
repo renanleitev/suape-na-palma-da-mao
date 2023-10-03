@@ -84,8 +84,10 @@ function firstLoad() {
     }
 }
 function getEmpresaOuPonto(url) {
-    // mostrando tela de loading
-    loading.showModal();
+    if (listaEmpresas.length > 0) {
+        // mostrando tela de loading
+        loading.showModal();
+    }
     // selecionado o elemento select
     const select = document.getElementById("empresas");
     // limpando o select
@@ -106,11 +108,10 @@ function getEmpresaOuPonto(url) {
                 option.value = `${empresa.Latitude},${empresa.Longitude}`;
                 // adicionando cada option no select
                 select.appendChild(option);
-                // fechando o loading
-                loading.close();
             });
+            // fechando o loading
+            loading.close();
         })
-        .catch((e) => setTimeout(() => loading.close(), delayTime));
 }
 // fazendo a requisição GET (pontos)
 function searchPontos() {
@@ -127,6 +128,7 @@ function searchPontos() {
     getEmpresaOuPonto(pontosUrl);
     // obtendo os valores do input de pesquisar
     const pesquisar = document.getElementById('pesquisar');
+    // trocando o placeholder por "Pontos de interesse..."
     pesquisar.placeholder = "Pontos de interesse...";
 }
 // fazendo a requisição GET (empresas)
@@ -144,6 +146,7 @@ function searchEmpresas() {
     getEmpresaOuPonto(empresasUrl);
     // obtendo os valores do input de pesquisar
     const pesquisar = document.getElementById('pesquisar');
+    // trocando o placeholder por "Empresas..."
     pesquisar.placeholder = "Empresas...";
 }
 // checando se o input e o select foram modificados
