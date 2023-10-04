@@ -2,6 +2,11 @@
 
 Projeto desenvolvido por alunos do curso de Análise e Desenvolvimento de Sistemas da Faculdade Senac/Pernambuco, para a disciplina de Mobile.
 
+## Links
+
+1. Site: https://renanleitev.github.io/suape-na-palma-da-mao/
+2. Api: https://api-suape.onrender.com/ 
+
 ## Sobre o aplicativo
 
 Trata-se de um aplicativo web mobile desenvolvido para orientar visitantes e funcionários que trabalham no Porto de Suape, para que possam se localizar com maior facilidade e rapidez pelo porto. O aplicativo é construído com HTML, CSS e Javascript, com suporte a PWA.
@@ -14,8 +19,12 @@ Possui um mapa central, que exibe a localização atual do usuário. Após, o us
 
 ## Ferramentas
 
-1. [Bootsrap](https://getbootstrap.com/)
+1. [Bootstrap](https://getbootstrap.com/)
 2. Google Maps iframe
+3. React
+4. Node
+5. MongoDB
+6. PWA
 
 ## Estrutura do projeto
 
@@ -23,11 +32,6 @@ Possui um mapa central, que exibe a localização atual do usuário. Após, o us
 2. css = Onde ficam armazenados os estilos do site (Ex: style.css)
 3. javascript = Onde ficam armazenados os arquivos de javascript do site (Ex: initial-screen.js)
 4. back-end = Onde ficam armazenados os arquivos de testes, utilizados para se comunicar com a api no back-end
-
-## Links
-
-1. Site: https://renanleitev.github.io/suape-na-palma-da-mao/
-2. Api: https://api-suape.onrender.com/ 
 
 ## TODO
 

@@ -112,6 +112,7 @@ function getEmpresaOuPonto(url) {
             // fechando o loading
             loading.close();
         })
+        .catch((e) => offline.showModal())
 }
 // fazendo a requisição GET (pontos)
 function searchPontos() {
@@ -348,23 +349,29 @@ function createUrlMap(coordenadas) {
     iframe.src = urlConstruct;
 }
 // exibindo informações da empresa selecionada
-function splitPhoneNumber(contato) {
+function splitCompanyContact(contato) {
     // zerando os números de telefone, quando trocar de empresa
     empresaContato.innerHTML = "";
     // separando os números de telefone, se houver mais de um
     const listaContato = contato.split(',');
     // para cada número de telefone, criar um link para ligar
-    listaContato.forEach((telefone) => {
+    listaContato.forEach((contato) => {
         // criando um elemento br, para quebrar linha entre os números
         const quebraLinha = document.createElement("br");
         // criando um elemento a, para criar um link para ligar
-        const telefoneNumero = document.createElement("a");
+        const contatoEmpresa = document.createElement("a");
         // o texto do link será o número de telefone
-        telefoneNumero.innerHTML = telefone;
-        // o link será o número de telefone
-        telefoneNumero.href = `tel:${telefone}`;
+        contatoEmpresa.innerHTML = contato;
+        // checando se é e-mail
+        // https://stackoverflow.com/questions/16424659/check-if-a-string-contains-an-email-address
+        if (contato.match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi)){
+            contatoEmpresa.href = `mailto:${contato}`;
+        } else {
+            // o link será o número de telefone
+            contatoEmpresa.href = `tel:${contato}`;
+        }
         // adicionando o número de telefone ao contato da empresa
-        empresaContato.appendChild(telefoneNumero);
+        empresaContato.appendChild(contatoEmpresa);
         // adicionando a quebra de linha, para separar os números
         empresaContato.appendChild(quebraLinha);
     })
@@ -374,7 +381,7 @@ function showCompanyInfo(empresa) {
     empresaNome.innerHTML = empresa.Nome;
     empresaAtividade.innerHTML = "Atividade: " + empresa.Atividade;
     empresaEndereco.innerHTML = "Endereço: " + empresa.Endereço;
-    splitPhoneNumber(empresa.Contato);
+    splitCompanyContact(empresa.Contato);
 }
 // https://horadecodar.com.br/como-salvar-arrays-na-localstorage-de-javascript/ 
 function showHistoryJourney() {
