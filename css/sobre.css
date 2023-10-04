@@ -31,6 +31,10 @@ h2{
 
 .text-paragraph{
     color: gray;
+    left: 0;
+    right: 0;
+    margin: 20px auto;
+    max-width: 600px;
 }
 
 /* Configurações do container principal */
@@ -43,6 +47,7 @@ h2{
 
 .secondary-container{
     padding: 20px;
+    position: relative;
 }
 
 /* Configurações do header */
