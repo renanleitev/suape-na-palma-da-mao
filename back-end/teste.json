@@ -1,0 +1,14 @@
+[
+    {
+        "nome": "Produto X",
+        "quantidadeItensBons": 0,
+        "quantidadeItensRefugo": 0,
+        "quantidadeItensRestaurar": 0
+    },
+    {
+        "nome": "Produto Y",
+        "quantidadeItensBons": 0,
+        "quantidadeItensRefugo": 0,
+        "quantidadeItensRestaurar": 0
+    }
+]
