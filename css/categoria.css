@@ -1,0 +1,72 @@
+/* Configurações gerais */
+:root {
+    --cor-verde-principal: #2f7667;
+    --cor-verde-secundaria: #0c5445;
+    --cor-branca-principal: #ffffff;
+    --cor-escura-principal: #000000;
+    --cor-escura-secundaria: #00000096;
+    --cor-azul-principal: #3498db;
+}
+
+* {
+    padding: 0;
+    margin-left: 0;
+    margin-right: 0;
+    font-size: 20px;
+}
+
+body {
+    overflow-x: hidden;
+}
+
+.titulo{
+    margin-bottom: 20px;
+    margin-top: 50px;
+    font-family: Arial, Helvetica, sans-serif;
+    
+}
+
+.main-container {
+    width: 100vw;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.header {
+    padding: 20px;
+    padding-bottom: 0;
+    display: flex;
+    flex-direction: row;
+    background-color: var(--cor-verde-principal);
+    justify-content: center;
+    align-items: center;
+}
+
+.header-title {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    color: var(--cor-branca-principal);
+    font-size: 20px;
+}
+
+.menu-sidebar {
+    background-color: transparent;
+    border: none;
+    transform: rotate(90deg);
+    margin-bottom: 20px;
+}
+
+.offcanvas {
+    background-color: var(--cor-verde-principal) !important;
+}
+
+.menu-sidebar {
+    background-color: transparent;
+    border: none;
+    transform: rotate(90deg);
+    margin-bottom: 20px;
+    color: var(--cor-branca-principal);
+}
